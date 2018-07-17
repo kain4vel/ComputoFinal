@@ -1,0 +1,183 @@
+<div class="uk-grid-small uk-margin-remove">
+    <div ng-include src="'app/site_movil/views/shared/avanceView.html'"></div>
+</div>
+
+<div class="uk-grid uk-margin-remove">
+    <div class="uk-width-1-1 uk-padding-add uk-text-right uk-margin-remove">
+        <a ng-click="reload()" class="uk-button uk-margin-remove uk-button-small m-background-purple m-font-color-white">
+            <i class="material-icons m-font-color-white">refresher</i> Actualizar
+        </a>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-margin-remove">
+    <a ui-sref="movil.gubernatura_entidad_detalle" class="uk-width-1-2 uk-text-center uk-text-small uk-text-middle m-background-purple m-button-firts m-background-purple-active">Votos por Candidatura</a>
+    <a ui-sref="movil.gubernatura_entidad_detalle_pp_ci" class="uk-width-1-2 uk-text-center uk-text-small uk-text-middle m-background-purple m-button-second">Votos por Partido Político y Candidatura Independiente</a>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small-1-1 uk-flex uk-flex-center" id="page_content">
+    <div class="uk-width-1-1 uk-margin-left">
+        <h3 class="md-color-pink uk-margin-remove">Gubernatura
+            <span class="md-color-purple">- Detalle de Entidad</span>
+        </h3>
+        <label>Votos por Candidatura</label>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small uk-flex uk-flex-center">
+    <div class="md-card uk-grid uk-grid-small uk-margin-remove">
+        <div class="uk-width-1-1 uk-padding-remove">
+            <table class="uk-table uk-table-small uk-table-responsive uk-text-center uk-table-striped">
+                <thead>
+                    <tr class="m-table-result-total uk-text-center">
+                        <th class="uk-width-1-1 uk-text-middle mo-border-total">
+                            <div class="uk-grid">
+                                <div class="uk-width-1-2 uk-text-bold uk-text-right mo-border-right">
+                                    <p class="uk-text-small uk-margin-remove">Total de votos</p>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-bold uk-text-left">
+                                    <p class="uk-text-small uk-margin-remove">{{ entidad.resumen_entidad.total_votos[((encabezados | filter:query).length + 2)] | number
+                                        }}
+                                    </p>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in encabezados">
+                        <td>
+                            <div class="uk-grid">
+                                <div class="uk-width-1-1 uk-text-center">
+                                    <img class="logo-tabla" ng-if="item.nombrecorto != '' " ng-src="assets/img/logos_partidos/{{ item.nombrecorto }}.png">
+                                    <p class="uk-text-small m-quita-margin uk-text-bold">{{ item.candidato }}</p>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-bold">
+                                    <p class="uk-text-small uk-text-right uk-text-bold m-quita-margin">{{ entidad.resumen_entidad.porcentaje[$index] }}%</p>
+                                    <div class="uk-progress m-progress-bar-gobernador m-progress-height-15 m-quita-margin">
+                                        <div ng-style="{ 'width': {{entidad.resumen_entidad.porcentaje[$index]}} + '%' }" class="uk-progress-bar m-quita-margin"></div>
+                                    </div>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-bold">
+                                    <p class="uk-text-small uk-text-comment m-font-size-10 m-quita-margin">Total de votos</p>
+                                    <p class="uk-text-small uk-text-bold m-quita-margin m-font-size-10">{{ entidad.resumen_entidad.total_votos[$index] | number }}</p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="uk-grid">
+                                <div class="uk-width-1-1 uk-text-center">
+                                    <p class="uk-text-small m-quita-margin uk-text-bold">Candidaturas no registradas</p>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-bold">
+                                    <p class="uk-text-small uk-text-right uk-text-bold m-quita-margin">{{ entidad.resumen_entidad.porcentaje[((encabezados | filter:query).length)] }}%</p>
+                                    <div class="uk-progress m-progress-bar-gobernador m-progress-height-15 m-quita-margin">
+                                        <div ng-style="{ 'width': {{entidad.resumen_entidad.porcentaje[((encabezados | filter:query).length)]}} + '%' }" class="uk-progress-bar m-quita-margin"></div>
+                                    </div>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-bold">
+                                    <p class="uk-text-small uk-text-comment m-font-size-10 m-quita-margin">Total de votos</p>
+                                    <p class="uk-text-small uk-text-bold m-quita-margin m-font-size-10">{{ entidad.resumen_entidad.total_votos[((encabezados | filter:query).length)] | number
+                                        : 0 }}</p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="uk-grid">
+                                <div class="uk-width-1-1 uk-text-center">
+                                    <p class="uk-text-small m-quita-margin uk-text-bold">Votos nulos</p>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-bold">
+                                    <p class="uk-text-small uk-text-right uk-text-bold m-quita-margin">{{ entidad.resumen_entidad.porcentaje[((encabezados | filter:query).length + 1)] }}%</p>
+                                    <div class="uk-progress m-progress-bar-gobernador m-progress-height-15 m-quita-margin">
+                                        <div ng-style="{ 'width': {{entidad.resumen_entidad.porcentaje[((encabezados | filter:query).length + 1 )]}} + '%' }" class="uk-progress-bar m-quita-margin"></div>
+                                    </div>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-bold">
+                                    <p class="uk-text-small uk-text-comment m-font-size-10 m-quita-margin">Total de votos</p>
+                                    <p class="uk-text-small uk-text-bold m-quita-margin m-font-size-10">{{ entidad.resumen_entidad.total_votos[((encabezados | filter:query).length + 1 )] |
+                                        number }}</p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small-1-1 uk-flex uk-flex-center" id="page_content">
+    <div class="uk-width-2-4"></div>
+    <div class="uk-width-2-4 uk-grid-small uk-text-right">
+        <a ui-sref="movil.gubernatura_distritos" class="uk-button uk-text-small m-background-purple">Ver detalle por Distritos</a>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small-1-1 uk-flex uk-flex-center">
+    <div class="md-card">
+        <div class="uk-width-small-1-1 uk-padding-add">
+            <h4 class="md-color-purple uk-margin-remove">Distribución de votos por candidatura a nivel Entidad </h4>
+            <h3 class="uk-text-small uk-margin-remove uk-text-justify"> La tabla muestra el desglose de votos que cada candidatura presenta en el Distrito, indicando los votos recibidos
+                de manera individual y, en su caso, los votos recibidos vía coalición. </h3>
+            <h5 class="md-bg-grey-200 uk-padding-add">
+                <a href="https://prepgto2018.ieeg.mx/ayuda/pages/acerca_voto/acerca_voto_1.html"  target="_blank" class="uk-text-small uk-text-center"> Conoce cómo se suman los votos para Candidaturas de Coalición.</a>
+            </h5>
+        </div>
+        <div class="uk-width-small-1-1 uk-padding-add">
+            <table class="uk-table uk-table-small uk-table-striped uk-table-responsive">
+                <thead>
+                    <tr class="uk-text-bold border-bottom-pink uk-text-center">
+                        <th>
+                            <div class="uk-grid uk-grid-small uk-text-center">
+                                <div class="uk-width-1-3 uk-text-middle uk-vertical-center">
+                                    Candidaturas
+                                </div>
+                                <div class="uk-width-2-3 uk-text-middle uk-vertical-center">
+                                    Distribución de votos por candidatura
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in entidad.distribucion_entidad">
+                        <td class="uk-text-center">
+                            <div class="uk-grid">
+                                <div class="uk-width-1-3 uk-text-center uk-padding-add m-table-border-right">
+                                    <p class="uk-text-small m-quita-margin">{{ encabezados[$index].candidato }}</p>
+                                </div>
+                                <div class="uk-width-2-3">
+                                    <div ng-repeat="i in item.distribucion_votos" class="uk-display-inline-block uk-text-center">
+                                        <div class="uk-display-inline-block">
+                                            {{ i.votos | number }}
+                                            <br>
+                                            <img class="logo-tabla uk-margin-small-left uk-margin-small-right" ng-src="assets/img/logos_partidos/{{i.nombre_corto}}.png">
+                                        </div>
+                                        <i class="material-icons md-color-black" ng-if="!$last">add_circle</i>
+                                    </div>
+                                </div>
+                                <div class="uk-width-1-1 uk-padding-add">
+                                    <p class="uk-text-small m-quita-margin">Total de votos por candidatura = {{item.total_votos | number}}</p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small-1-1 uk-flex uk-flex-center" id="page_content">
+    <div class="uk-width-2-4"></div>
+    <div class="uk-width-2-4 uk-grid-small uk-text-right">
+        <a ui-sref="movil.gubernatura_distritos" class="uk-button uk-text-small m-background-purple">Ver detalle por Distritos</a>
+    </div>
+</div>
+
+<br>

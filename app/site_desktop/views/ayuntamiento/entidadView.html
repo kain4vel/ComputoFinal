@@ -1,0 +1,150 @@
+<div id="page_content">
+    <div id="top_bar">
+        <div ncy-breadcrumb></div>
+    </div>
+    <div id="page_content_inner">
+
+        <div class="uk-grid uk-grid-medium uk-margin-bottom">
+            <div class="uk-width-large-1-5 uk-width-small-1-1">
+                <h3>
+                    <span class="md-color-pink">
+                        <input type="radio" name="radio_municipios" id="radio" icheck ng-model="radio_municipios" value="1" ng-checked="true" ng-change="getVal()"/>
+                        <label for="radio" class="inline-label">Votos por Candidaturas</label>
+                    </span>
+                </h3>
+            </div>
+            <div class="uk-width-large-3-5 uk-width-small-1-1">
+                <h3>
+                    <span>
+                        <input type="radio" name="radio_municipios" id="radio_pp_ci" icheck ng-model="radio_municipios" value="2" ng-change="getVal()"/>
+                        <label for="radio_pp_ci" class="inline-label">Votos por Partido Político y Candidatura Independiente</label>
+                    </span>
+                </h3>
+            </div>
+            <div class="uk-width-large-1-5 uk-width-small-1-1 uk-text-right">
+                <a ng-click="reload()" class="md-btn md-btn-small md-bg-purple md-color-white md-btn-wave-light md-btn-icon">
+                    <i class="material-icons md-color-white uk-margin-right">loop</i>Actualizar
+                </a>
+            </div>
+        </div>
+
+        <div ng-include src="'app/site_desktop/views/shared/avanceView.html'"></div>
+        
+        <div class="uk-grid uk-grid-medium">
+            <div class="uk-width-large-4-5 uk-width-medium-1-2 uk-width-small-1-1">
+                <h2 class="uk-margin-bottom uk-margin-top md-color-pink">Ayuntamientos
+                    <span class="md-color-purple">- Entidad</span>
+                </h2>
+                <ul class="md-list md-list-addon">
+                    <li>
+                        <div class="md-list-addon-element">
+                            <i class="material-icons md-color-pink md-list-addon-icon">info</i>
+                        </div>
+                        <div class="md-list-content">
+                            <span class="uk-text-small">Es posible que se presente un empate entre dos o más partidos políticos, coaliciones o candidaturas independientes y se resolvería hasta el cómputo final.</span>
+                            <span class="uk-text-small">Por presentación, los decimales de los porcentajes muestran sólo cuatro dígitos. No obstante, al considerar todos suman 100%.</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="uk-width-large-1-5 uk-width-medium-1-2 uk-width-small-1-1 uk-text-right">
+                <br/>
+                <a ui-sref="desktop.basedatos" class="md-btn md-btn-small md-bg-grey-800 md-color-white md-btn-wave-light md-btn-icon">
+                    <i class="uk-icon-download md-color-white"></i>
+                    Base de datos
+                </a>
+            </div>
+        </div>
+
+         <div class="md-card uk-margin-bottom">
+            <div class="md-card-content">
+                <h2 class="heading_a md-color-pink-500">
+                    Mapa Municipios
+                    <span class="sub-heading">El Mapa resalta los municipios donde aventaja el partido político, coalición o candidatura independiente hasta el momento.</span>
+                </h2>
+                <div class="uk-grid uk-grid-medium">
+                    <div class="uk-width-large-2-6">
+                        <p class="uk-text-bold">Municipios obtenidos por:</p>
+                        <input type="text" config="cmb_partidos_config" options="cmb_partidos_data" ng-model="partidos_cmb" name="partidos_cmb" selectize />
+                        <div class="scroll-vertical uk-margin-large-top">
+                            <table class="uk-table uk-table-striped">
+                                <thead class="md-bg-pink-500">
+                                    <tr>
+                                        <th class="md-color-white">Partidos, Coaliciones y Candidaturas Independientes</th>
+                                        <th class="md-color-white">Municipios obtenidos</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in tbl_partidos">
+                                        <td>
+                                            <span style="background-color: {{item.color}}; font-size: 1.5rem;">&nbsp;&nbsp;</span>
+                                            <img class="logo-tabla" ng-src="{{item.img}}">
+                                        </td>
+                                        <td class="uk-text-center uk-vertical-center">
+                                            <h3 class="uk-margin-top-remove uk-margin-bottom-remove">{{entidad.resumen_entidad.municipios_obtenidos[$index]}}</h3>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="uk-width-large-4-6">
+                        <div id="vmaps_municipios" class="uk-text-center uk-margin-top">
+                            <div class="map uk-map-center"></div>
+                            <div class="areaLegend" style="display:none;"></div>
+                        </div>
+                    </div>
+
+                    <div class="uk-width-large-1-1 uk-margin-large-top">
+                        <div data-double-scroll-bar-horizontal>
+                            <table class="uk-table uk-table-border">
+                                <thead>
+                                    <tr class="border-bottom-pink">
+                                        <th></th>
+                                        <th ng-repeat="item in encabezados" class="uk-text-center">
+                                            <img class="logo-tabla" ng-if="item.nombrecorto != ''" ng-src="assets/img/logos_partidos/{{item.nombrecorto}}.png">
+                                            <p class="uk-margin-bottom-remove uk-margin-top-remove" ng-if="item.titulo != ''">{{item.titulo}}</p>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="md-bg-grey-200 uk-text-truncate uk-text-bold">Municipios obtenidos</td>
+                                        <td ng-repeat="item in entidad.resumen_entidad.municipios_obtenidos track by $index" class="uk-text-center md-bg-pink-50" ng-class="{'ashurado': item < 0}">
+                                            <div ng-if="item >= 0">{{item | number}}</div>
+                                            <div ng-if="item < 0"></div> 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="md-bg-grey-200 uk-text-truncate uk-text-bold">Total de votos</td>
+                                        <td ng-repeat="item in entidad.resumen_entidad.total_votos track by $index" class="uk-text-center md-bg-pink-50">{{item | number}}</td>
+                                    </tr>
+                                    <tr class="border-bottom-pink">
+                                        <td class="md-bg-grey-200 uk-text-truncate uk-text-bold">Porcentaje</td>
+                                        <td ng-repeat="item in entidad.resumen_entidad.porcentaje track by $index" class="uk-text-center md-bg-pink-50">{{item}}%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+        <div class="uk-width-large-1-1 uk-text-right">
+            <a ui-sref="desktop.ayuntamientos_entidad_detalle" class="md-btn md-btn-wave waves-effect waves-button md-btn-small md-color-purple-900 btn-detalle">
+                Ver detalle de Entidad
+            </a>
+            <a ui-sref="desktop.basedatos" class="md-btn md-btn-small md-bg-grey-800 md-color-white md-btn-wave-light md-btn-icon btn-descargar">
+                <i class="uk-icon-download md-color-white"></i>
+                Base de datos
+            </a>
+        </div>
+
+        <div ng-include src="'app/site_desktop/views/shared/ultimo_corte.html'"></div>
+
+    </div>
+</div>

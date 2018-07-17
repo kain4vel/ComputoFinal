@@ -1,0 +1,146 @@
+<div id="page_content">
+    <div id="top_bar">
+        <div ncy-breadcrumb></div>
+    </div>
+
+    <div id="page_content_inner">
+
+        <div class="uk-grid uk-grid-medium">
+            <div class="uk-width-large-1-1 uk-width-small-1-1 uk-text-right">
+                <a ng-click="reload()" class="md-btn md-btn-small md-bg-purple md-color-white md-btn-wave-light md-btn-icon">
+                    <i class="material-icons md-color-white uk-margin-right">loop</i>Actualizar
+                </a>
+            </div>
+        </div>
+        
+        <div ng-include src="'app/site_desktop/views/shared/avanceView.html'"></div>
+
+        <div class="uk-grid uk-grid-medium">
+            <div class="uk-width-large-4-5 uk-width-medium-1-2 uk-width-small-1-1">
+                <h2 class="uk-margin-top md-color-pink">Diputaciones
+                    <span class="md-color-purple">- Representación Proporcional</span>
+                </h2>
+                <h2 class="md-color-purple-900">
+                    Guanajuato
+                </h2>
+                <ul class="md-list md-list-addon">
+                    <li>
+                        <div class="md-list-addon-element">
+                            <i class="material-icons md-color-pink md-list-addon-icon">info</i>
+                        </div>
+                        <div class="md-list-content">
+                            <span class="uk-text-small">Cantidad de votos por representación proporcional en cada casilla especial que conforma la Entidad federativa; de acuerdo a la información asentada en las actas de escrutinio
+                                    y cómputo.</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="uk-width-large-1-5 uk-width-medium-1-2 uk-width-small-1-1 uk-text-right">
+                <br/>
+                <a ui-sref="desktop.basedatos" class="md-btn md-btn-small md-bg-grey-800 md-color-white md-btn-wave-light md-btn-icon">
+                    <i class="uk-icon-download md-color-white"></i>
+                    Base de datos
+                </a>
+            </div>
+        </div>
+        
+        <div class="md-card uk-margin-bottom">
+            <div class="md-card-content">
+                <h3 class="md-color-purple">
+                    Resumen de la votación
+                </h3>
+                <div class="uk-width-large-1-1 uk-text-left">
+                    <div data-double-scroll-bar-horizontal>
+                        <table class="uk-table uk-table-striped uk-table-border">
+                            <thead>
+                                <tr class="border-bottom-pink">
+                                    <th colspan="3"></th>
+                                    <th ng-repeat="item in encabezados" class="uk-text-center">
+                                        <img class="logo-tabla" ng-if="item.nombrecorto != '' " ng-src="assets/img/logos_partidos/{{item.nombrecorto}}.png">
+                                        <p class="uk-margin-bottom-remove uk-margin-top-remove">{{item.title}}</p>
+                                    </th>
+                                    <th>Observaciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-bottom-pink">
+                                    <td colspan="3" class="md-bg-grey-200 uk-text-bold">Total de votos de Casillas Especiales</td>
+                                    <td ng-repeat="item in entidad.resumen_votacion_rp track by $index" class="uk-text-center md-bg-pink-50 uk-vertical-center">{{item}}</td>
+                                    <td class="md-bg-pink-50 ashurado"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" class="md-delete-border-lr ">
+                                        <h3 class="md-color-purple-900 uk-margin-bottom-remove uk-margin-top">Detalle de votos por Casilla</h3>
+                                    </td>
+                                    <td colspan="10" class="md-delete-border-lr  uk-text-right">
+                                        <p class="uk-margin-bottom-remove uk-margin-top">
+                                            <i class="material-icons">insert_drive_file</i> Acta en proceso | 
+                                            <i class="material-icons md-color-purple-400">insert_drive_file</i><i class="material-icons md-color-purple-400">print</i> Acta digitalizada con scanner |
+                                            <i class="material-icons md-color-purple-400">insert_drive_file</i><i class="material-icons md-color-purple-400">smartphone</i> Acta digitalizada con dispositivo móvil
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr class="md-bg-pink-50">
+                                    <td>Casilla</td>
+                                    <th class="uk-text-center">Código Sha</th>
+                                    <td class="uk-text-center">Acta digitalizada</td>
+                                    <td colspan="14"></td>
+                                </tr>
+                                <tr ng-repeat="item in entidad.detalle_votos_casilla_rp" ng-class="{'border-bottom-pink':$last}">
+                                    <td class="uk-text-truncate">{{item.IDSECCION | fill4numbers}} {{item.TITULO}}</td>
+                                    <td ng-if="item.SHA == '' " class="uk-text-center">
+                                        <i class="material-icons">https</i>
+                                    </td>
+                                    <td ng-if="item.SHA != '' " class="uk-text-center">
+                                        <a href="#modal_sha" data-uk-modal ng-click="open(item.SHA)"><i class="material-icons md-color-purple-400">https</i></a>
+                                    </td>
+                                    <td ng-if="item.ORIGEN == '' " class="uk-text-center">
+                                        <i class="material-icons">insert_drive_file</i>
+                                    </td>
+                                    <td ng-if="item.ORIGEN == 'CATD'" class="uk-text-center">
+                                        <a href="https://s3.amazonaws.com/imagenes-ieeg01/{{item.URL}}" target="_blank"><i class="material-icons md-color-purple-400">insert_drive_file</i><i class="material-icons md-color-purple-400">print</i></a>
+                                    </td>
+                                    <td ng-if="item.ORIGEN == 'CASILLA'" class="uk-text-center">
+                                        <a href="https://s3.amazonaws.com/imagenes-ieeg01/{{item.URL}}" target="_blank"><i class="material-icons md-color-purple-400">insert_drive_file</i><i class="material-icons md-color-purple-400">smartphone</i></a>
+                                    </td>
+                                    <td ng-repeat="i in item.VOTOS track by $index" class="uk-text-center">{{i}}</td>
+                                    <td class="uk-text-truncate">{{item.OBSERVACION}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="uk-width-large-1-1 uk-text-right uk-margin-large-bottom">
+            <a ui-sref="desktop.basedatos" class="md-btn md-btn-small md-bg-grey-800 md-color-white md-btn-wave-light md-btn-icon btn-descargar">
+                <i class="uk-icon-download md-color-white"></i>
+                Base de datos
+            </a>
+        </div>
+
+        <div ng-include src="'app/site_desktop/views/shared/inconsistencias.html'"></div>
+
+        <div class="uk-width-large-1-1 ">
+            <h2 class="uk-margin-large-top md-color-pink">Referencias</h2>
+            <h3 class="md-color-purple">¿Qué es una casilla especial?</h3>
+            <p class="uk-margin-bottom-remove"> 
+                Es el local que se instala para recibir los votos de los ciudadanos que se encuentran transitoriamente fuera de su sección.<br/>
+                Se podrán instalar hasta 10 casillas por distrito electoral.
+            </p>
+        </div>
+    </div>
+</div>
+<div class="uk-modal" id="modal_sha">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div class="uk-modal-header">
+            <h3 class="uk-modal-title">Código Sha:</h3>
+        </div>
+        <p class="md-color-purple-900" id="sha">{{codigo_sha}}</p>
+        <div class="uk-modal-footer uk-text-right">
+            <button type="button" class="md-btn md-color-pink uk-modal-close" ng-click="copiar()">Copiar</button>
+        </div>
+    </div>
+</div>

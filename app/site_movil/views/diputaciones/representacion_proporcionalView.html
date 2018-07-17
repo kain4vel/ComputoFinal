@@ -1,0 +1,181 @@
+<div class="uk-grid-small uk-margin-remove">
+    <div ng-include src="'app/site_movil/views/shared/avanceView.html'"></div>
+</div>
+
+<div class="uk-grid uk-margin-remove">
+    <div class="uk-width-1-1 uk-padding-add uk-text-right uk-margin-remove">
+        <a ng-click="reload()" class="uk-button uk-margin-remove uk-button-small m-background-purple m-font-color-white">
+            <i class="material-icons m-font-color-white">refresher</i> Actualizar
+        </a>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small-1-1 uk-flex uk-flex-center uk-margin-remove" id="page_content">
+    <div class="uk-width-1-1">
+        <h3 class="uk-margin-bottom uk-margin-top md-color-pink uk-padding-remove">Diputaciones
+            <span class="md-color-purple">- Representación Proporcional</span>
+        </h3>
+        <h4 class="uk-padding-remove uk-margin-remove">Guanjuato</h4>
+    </div>
+    <div class="uk-width-1-1 uk-text-small uk-text-justify">
+        <p class="uk-padding-remove">Cantidad de votos por representación proporcional en cada casilla especial que conforma la Entidad federativa; de
+            acuerdo a la información asentada en las actas de escrutinio y cómputo.</p>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small-1-1 uk-flex uk-flex-center">
+    <div class="md-card">
+        <div class="uk-grid m-background-purple-combobox">
+            <div class="uk-width-1-5"></div>
+            <div class="uk-width-3-5">
+                <p class="uk-text-center m-encabezdo-texto-otros-votos">Resumen de la votacion:</p>
+                <input type="text" config="cmb_actas_config" options="cmb_actas_data" ng-model="actas_cmb" name="actas_cmb" selectize class="uk-form-width-large uk-text-center"
+                />
+            </div>
+            <div class="uk-width-1-5"></div>
+        </div>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small uk-flex uk-flex-center">
+    <div class="md-card uk-grid uk-grid-small uk-margin-remove">
+        <div class="uk-width-1-1 uk-padding-remove">
+            <table class="uk-table uk-table-small uk-table-responsive uk-text-center uk-table-striped">
+                <thead>
+                    <tr class="m-table-result-total">
+                        <th class="uk-width-1-2 uk-text-middle uk-text-right mo-border-right mo-border-total"> Total de votos </th>
+                        <th class="uk-width-1-2 mo-border-total">
+                            {{ (entidad.detalle_votos_casilla_rp | filter:{IDSECCION : actas_cmb})[0].VOTOS[((encabezados | filter : query).length -
+                            1)] }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="2">
+                            <div class="uk-grid">
+                                <div class="uk-width-1-2">
+                                    <p class="uk-text-bold">Código Sha</p>
+                                </div>
+                                <div class="uk-width-1-2">
+                                    <p class="uk-text-bold">Acta digitalizada</p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="item in encabezados" ng-if="$index != ((encabezados | filter : query).length - 1)">
+                        <td colspan="2">
+                            <div class="uk-grid uk-text-small">
+                                <div class="uk-width-1-3">
+                                    <img class="logo-tabla" ng-if="item.nombrecorto != ''" ng-src="assets/img/logos_partidos/{{ item.nombrecorto }}.png">
+                                    <p class="uk-margin-bottom-remove uk-margin-top-remove uk-text-bold" ng-if="item.title != '' ">{{item.title}}</p>
+                                </div>
+                                <div class="uk-width-1-3">
+                                    <p class="uk-text-small">
+                                        Votos de Casillas Especiales
+                                        <br> {{ entidad.resumen_votacion_rp[$index] }}
+                                    </p>
+                                </div>
+                                <div class="uk-width-1-3">
+                                    <p>
+                                        Votos
+                                        <br> {{ (entidad.detalle_votos_casilla_rp | filter:{IDSECCION : actas_cmb})[0].VOTOS[$index]
+                                        }}
+                                    </p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="uk-grid">
+                                <div class="uk-width-1-2">
+                                    <p class="uk-text-bold">Observaciones: </p>
+                                </div>
+                                <div class="uk-width-1-2">
+                                    <p>{{ (entidad.detalle_votos_casilla_rp | filter:{IDSECCION : actas_cmb})[0].OBSERVACION
+                                        }}
+                                    </p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small uk-flex uk-flex-center">
+    <div class="md-card uk-grid uk-grid-small uk-margin-remove">
+        <div class="uk-width-1-1 uk-padding-remove">
+            <table class="uk-table uk-table-small uk-table-responsive uk-text-left uk-table-striped">
+                <thead>
+                    <th colspan="2" class="uk-vertical-center">
+                        <h2 class="md-color-purple">Actas con inconsistencias </h2>
+                    </th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th class="uk-vertical-center uk-text-small" colspan="2">
+                            <h4>Contabilizadas</h4>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td class="uk-vertical-center uk-text-small">Identificación por proceso técnico operativo</td>
+                        <td class="uk-vertical-center uk-text-small">Los datos del acta no se identificaron y se solicitó verificarlos por algún procedimiento válido
+                            del proceso técnico operativo.</td>
+                    </tr>
+                    <tr>
+                        <th class="uk-vertical-center uk-text-small" colspan="2">
+                            <h4>No contabilizadas</h4>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td class="uk-vertical-center uk-text-small">Ilegible</td>
+                        <td class="uk-vertical-center uk-text-small">Los datos del acta no se identificaron y se solicitó verificarlos por algún procedimiento válido
+                            del proceso técnico operativo.</td>
+                    </tr>
+                    <tr>
+                        <td class="uk-vertical-center uk-text-small">Sin dato</td>
+                        <td class="uk-vertical-center uk-text-small">La cantidad de votos no fue asentada en el acta de escrutinio y cómputo.</td>
+                    </tr>
+                    <tr>
+                        <td class="uk-vertical-center uk-text-small">Identificación por proceso técnico operativo</td>
+                        <td class="uk-vertical-center uk-text-small">
+                            Al sumar todos los votos en el Acta PREP, se excede el número de ciudadanos de la Lista Nominal de Electores de la casilla
+                            electoral, incluido el número de votos emitidos por los representantes de partidos políticos
+                            y, en su caso, Candidaturass independientes acreditados - sean locales o federales-, motivo por
+                            el cual, los votos asentados no se contabilizan y el Acta PREP se integra al grupo de actas no
+                            contabilizadas.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uk-vertical-center uk-text-small">Sin Acta</td>
+                        <td class="uk-vertical-center uk-text-small">
+                            El acta de escrutinio y cómputo no llegó junto con el paquete electoral al Centro de Acopio y Transmisión de Datos (CATD),
+                            por algunas de las siguientes causas:
+                            <br> 1. No abrió la casilla
+                            <br> 2. El paquete electoral fue entregado sin el sobre PREP
+                            <br> 3. El sobre PREP no contenía la copia del acta.
+                            <br>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small uk-flex uk-flex-center">
+    <div class="md-card uk-grid uk-grid-small uk-margin-remove">
+        <div class="uk-width-1-1 uk-padding-add">
+            <h2 class="uk-margin-bottom uk-margin-top md-color-pink uk-padding-remove">Referencias</h2>
+            <h4 class="md-color-purple">¿Qué es una casilla especial?</h4>
+            <p class="uk-text-justify">Es el local que se instala para recibir los votos de los ciudadanos que se encuentran transitoriamente fuera
+                de su sección. Se podrán instalar hasta 10 casillas por distrito electoral.</p>
+        </div>
+    </div>
+</div>
+
+<br>

@@ -1,0 +1,11 @@
+    <!-- header -->
+    <div oc-lazy-load="['app/site_desktop/controllers/shared/headerController.js']">
+        <div ng-include="'app/site_desktop/views/shared/headerView.html'" ng-controller="main_headerCtrl"></div>
+    </div>
+    <div oc-lazy-load="['app/site_desktop/controllers/shared/menuController.js']">
+        <div ng-include="'app/site_desktop/views/shared/menu_topView.html'" ng-controller="main_menuCtrl"></div>
+    </div>
+       <!-- restricted main content -->
+    <div ui-view ng-class="{ 'uk-height-1-1': page_full_height }"></div>
+
+    <div ng-include src="'app/site_desktop/views/shared/footerView.html'"></div>

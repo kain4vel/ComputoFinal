@@ -1,0 +1,217 @@
+<div id="page_content">
+    <div id="top_bar">
+        <div ncy-breadcrumb></div>
+    </div>
+    <div id="page_content_inner">
+      
+        <div class="uk-grid uk-grid-medium uk-margin-bottom">
+            <div class="uk-width-large-1-5 uk-width-small-1-1">
+                <h3>
+                    <span class="md-color-pink">
+                       <input type="radio" name="radio_gubernatura" id="radio" icheck ng-model="radio_gubernatura" value="1" ng-checked="true" ng-change="getVal()"/>
+                        <label for="radio" class="inline-label">Votos por Candidatura</label>
+                    </span>
+                </h3>
+            </div>
+            <div class="uk-width-large-3-5 uk-width-small-1-1">
+                <h3>
+                    <span>
+                       <input type="radio" name="radio_gubernatura" id="radio_pp_ci" icheck ng-model="radio_gubernatura" value="2" ng-change="getVal()"/>
+                        <label for="radio_pp_ci" class="inline-label">Votos por Partido Político y Candidatura Independiente</label>
+                    </span>
+                </h3>
+            </div>
+            <div class="uk-width-large-1-5 uk-width-small-1-1 uk-text-right">
+                <a ng-click="reload()" class="md-btn md-btn-small md-bg-purple md-color-white md-btn-wave-light md-btn-icon">
+                    <i class="material-icons md-color-white uk-margin-right">loop</i>Actualizar
+                </a>
+            </div>
+        </div>
+
+        <div ng-include src="'app/site_desktop/views/shared/avanceView.html'"></div>
+        
+        <div class="uk-grid uk-grid-medium uk-margin-bottom">
+            <div class="uk-width-large-4-5 uk-width-medium-1-2 uk-width-small-1-1">
+                <h2 class="uk-margin-bottom uk-margin-top md-color-pink">Gubernatura
+                    <span class="md-color-purple">- Distritos</span>
+                </h2>
+                <ul class="md-list md-list-addon">
+                    <li>
+                        <div class="md-list-addon-element">
+                            <i class="material-icons md-color-pink md-list-addon-icon">info</i>
+                        </div>
+                        <div class="md-list-content">
+                            <span class="uk-text-small">El total de votos calculado y porcentaje que se muestran, se refieren a los votos asentados en las Actas PREP hasta el momento.</span>
+                            <span class="uk-text-small">Por presentación, los decimales de los porcentajes muestran sólo cuatro dígitos. No obstante, al considerar todos los decimales, suman 100%.</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="uk-width-large-1-5 uk-width-medium-1-2 uk-width-small-1-1 uk-text-right">
+                <br/>
+                <a ui-sref="desktop.basedatos" class="md-btn md-btn-small md-bg-grey-800 md-color-white md-btn-wave-light md-btn-icon">
+                    <i class="uk-icon-download md-color-white"></i>
+                    Base de datos
+                </a>
+            </div>
+        </div>
+
+        <div class="md-card uk-margin-bottom">
+            <div class="md-card-content">
+                <h3 class="md-color-purple">
+                    Resumen de la votación
+                </h3>
+                <div class="uk-width-large-1-1">
+                    <div data-double-scroll-bar-horizontal>
+                        <table class="uk-table uk-table-striped uk-table-border">
+                            <thead>
+                                <tr class="border-bottom-pink">
+                                    <th></th>
+                                    <th class="uk-text-center uk-vertical-center" ng-repeat="item in encabezados">
+                                        <img class="logo-tabla" ng-if="item.nombrecorto != '' " ng-src="assets/img/logos_partidos/{{item.nombrecorto}}.png">
+                                        <p class="uk-margin-bottom-remove uk-margin-top-remove" ng-class="{'md-color-pink uk-text-bold': $index == win}">{{item.candidato}}</p>
+                                    </th>
+                                    <th class="uk-text-center uk-vertical-center uk-text-bold">Candidaturas no registradas</th>
+                                    <th class="uk-text-center uk-vertical-center uk-text-bold">Votos nulos</th>
+                                    <th class="uk-text-center uk-vertical-center uk-text-bold">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="md-bg-grey-100 uk-text-truncate uk-text-bold">Total de votos</td>
+                                    <td class="uk-text-center uk-vertical-center md-bg-pink-50" ng-repeat="item in entidad.resumen_entidad.total_votos track by $index" ng-class="{'md-color-pink uk-text-bold': $index == win}">{{item | number}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="md-bg-grey-100 uk-text-bold">Porcentaje</td>
+                                    <td class="uk-text-center uk-vertical-center md-bg-pink-50" ng-repeat="item in entidad.resumen_entidad.porcentaje track by $index" ng-class="{'md-color-pink uk-text-bold': $index == win}">{{item}}%</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9" class="md-bg-white">
+                                        <h3 class="md-color-purple uk-margin-top uk-margin-bottom-remove">Detalle de votos por Distrito</h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9" class="md-bg-pink-50">Distritos</td>
+                            </tr>
+                            <tr>
+                                    <td class="uk-text-truncate"><a ui-sref="desktop.gubernatura_voto_extranjero">Voto en el extranjero</a></td>
+                                    <td ng-repeat="item in (entidad.detalle_votos_distritos | filter:{id_ubicacion : 69})[0].votos track by $index"  class="uk-text-center">{{item | number}}</td>
+                            </tr>
+                            <tr ng-repeat="item in entidad.detalle_votos_distritos">
+                                    <td ng-if="item.id_ubicacion != 69" class="uk-text-truncate"><a ui-sref="desktop.gubernatura_seccion_distrito({id_ubicacion: item.id_ubicacion })">{{item.title}}</a></td>
+                                    <td ng-if="item.id_ubicacion != 69" ng-repeat="i in item.votos track by $index"  class="uk-text-center">{{i | number}}</td>
+                            </tr>
+                            <tr class="border-bottom-pink md-bg-white">
+                                    <td class="uk-text-truncate uk-text-bold">Total</td>
+                                    <td class="uk-text-center" ng-repeat="item in entidad.resumen_entidad.total_votos track by $index">{{item | number}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="uk-width-large-1-1 uk-text-right uk-margin-bottom">
+            <a ui-sref="desktop.gubernatura_seccion_distrito({id_ubicacion: 47 })" class="md-btn md-btn-wave waves-effect waves-button md-btn-small md-color-purple-900 btn-detalle">
+                Ver detalle por Secciones
+            </a>
+            <a ui-sref="desktop.basedatos" class="md-btn md-btn-small md-bg-grey-800 md-color-white md-btn-wave-light md-btn-icon">
+                <i class="uk-icon-download md-color-white"></i>
+                Base de datos
+            </a>
+        </div>
+
+        <div class="uk-width-large-1-1">
+            <h4 class="md-color-purple">
+                Último corte:
+                <b>{{entidad.resumen.fecha_hora}} horas</b> <a href="http://www.cenam.mx/hora_oficial/" target="_blank">(UTC-5)</a> Hora local,
+                <b>{{entidad.resumen.fecha_corte}}.</b>
+            </h4>
+        </div>
+
+        <div class="md-card uk-margin-top">
+            <div class="md-card-content">
+                <div class="uk-width-large-1-1">
+                    <table class="uk-table uk-table-striped uk-table-border">
+                        <thead>
+                            <tr>
+                                <th class="md-delete-border-title" colspan="6">
+                                    <h3 class="md-color-purple">Actas por Distrito
+                                        <a href="https://prepgto2018.ieeg.mx/ayuda/pages/actas/actas.html" target="_blank"><i class="material-icons md-color-purple-900 uk-margin-left md-24">help</i></a>
+                                    </h3>
+                                </th>
+                                <th class="md-delete-border-title"></th>
+                                <th class="md-delete-border-title uk-width-2-5" colspan="4">
+                                    <h3 class="md-color-purple">Participación ciudadana respecto a las Actas Contabilizadas
+                                        <a href="https://prepgto2018.ieeg.mx/ayuda/pages/acerca_voto/acerca_voto.html" target="_blank"><i class="material-icons md-color-purple-900 uk-margin-left md-24">help</i></a>
+                                    </h3>
+                                </th>
+                            </tr>
+                            <tr class="md-bg-grey-200 border-bottom-pink">
+                                <th class="uk-text-bold uk-vertical-center">Actas</th>
+                                <th class="uk-text-center uk-text-bold uk-vertical-center">Esperadas</th>
+                                <th class="uk-text-center uk-text-bold uk-vertical-center">Capturadas</th>
+                                <th class="uk-text-center uk-text-bold uk-vertical-center">Contabilizadas</th>
+                                <th class="uk-text-center uk-text-bold uk-vertical-center">No Contabilizadas</th>
+                                <th class="uk-text-center uk-text-bold uk-vertical-center">Con Inconsistencias</th>
+                                <th class="md-delete-border"></th>
+                                <th class="uk-text-center uk-text-bold uk-vertical-center">Total de la lista nominal</th>
+                                <th class="uk-text-center uk-text-bold uk-vertical-center">Total de votos</th>
+                                <th class="uk-text-center uk-text-bold uk-vertical-center">Lista nominal de actas contabilizadas</th>
+                                <th class="uk-text-center uk-text-bold uk-vertical-center">Participación ciudadana</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="md-bg-grey-200 uk-text-truncate uk-text-bold">Total</td>
+                                <td class="md-bg-pink-50 uk-text-center" ng-repeat="item in entidad.actas_resumen.total track by $index">{{item | number}}</td>
+                                <th class="md-delete-border"></th>
+                                <td class="md-bg-pink-50 uk-text-center">{{entidad.actas_resumen.lista_nominal | number}}</td>
+                                <!-- <td class="md-bg-pink-50 uk-text-center">{{entidad.resumen_entidad.total_votos[((entidad.resumen_entidad.total_votos | filter:query).length -1)] | number}}</td> -->
+                                <td class="md-bg-pink-50 uk-text-center">{{entidad.actas_resumen.votos_scs | number}}</td>
+                                <td class="md-bg-pink-50 uk-text-center">{{entidad.actas_resumen.total_total | number}}</td>
+                                <td class="md-bg-pink-50 uk-text-center">{{entidad.actas_resumen.participacion_ppci}}%</td>
+                            </tr>
+                            <tr class="border-bottom-pink">
+                                <td class="md-bg-grey-200 uk-text-truncate uk-text-bold">Porcentaje</td>
+                                <td class="md-bg-pink-50 uk-text-center  uk-vertical-center" ng-repeat="item in entidad.actas_resumen.porcentaje track by $index">{{item}}%</td>
+                                <th class="md-delete-border"></th>
+                                <th class="md-bg-pink-50 md-color-pink-500"></th>                            
+                                <td class="md-bg-pink-50 md-color-pink-500 uk-text-center" colspan="3">Total de votos/lista nominal de actas contabilizadas = %Participación</td>
+                            </tr>
+                            <tr>
+                                <td class="uk-text-truncate"><a ui-sref="desktop.gubernatura_voto_extranjero">Voto en el extranjero</a></td>
+                                <td class="uk-text-center">{{(entidad.detalle_votos_distritos | filter:{id_ubicacion : 69})[0].esperadas | number}}</td>
+                                <td class="uk-text-center">{{(entidad.detalle_votos_distritos | filter:{id_ubicacion : 69})[0].capturadas | number}}</td>
+                                <td class="uk-text-center">{{(entidad.detalle_votos_distritos | filter:{id_ubicacion : 69})[0].contabilizadas | number}}</td>
+                                <td class="uk-text-center">{{(entidad.detalle_votos_distritos | filter:{id_ubicacion : 69})[0].no_contabilizadas | number}}</td>
+                                <td class="uk-text-center">{{(entidad.detalle_votos_distritos | filter:{id_ubicacion : 69})[0].con_inconsistencia | number}}</td>
+                                <th class="md-delete-border"></th>
+                                <td class="uk-text-center">{{(entidad.detalle_votos_distritos | filter:{id_ubicacion : 69})[0].total_lista_nominal | number}}</td>
+                                <!-- <td class="uk-text-center">{{(entidad.detalle_votos_distritos | filter:{id_ubicacion : 69})[0].votos[((encabezados| filter:query).length + 2)] | number}}</td> -->
+                                <td class="uk-text-center">{{(entidad.detalle_votos_distritos | filter:{id_ubicacion : 69})[0].votos_scs | number}}</td>
+                                <td class="uk-text-center">{{(entidad.detalle_votos_distritos | filter:{id_ubicacion : 69})[0].lncontabilizada | number}}</td>
+                                <td class="uk-text-center">{{(entidad.detalle_votos_distritos | filter:{id_ubicacion : 69})[0].participacion_ppci}}%</td>
+                            </tr>
+                            <tr ng-repeat="item in entidad.detalle_votos_distritos" ng-class="{'border-bottom-pink': $last}">
+                                <td ng-if="item.id_ubicacion != 69" class="uk-text-truncate"><a ui-sref="desktop.gubernatura_seccion_distrito({id_ubicacion: item.id_ubicacion })">{{item.title}}</a></td>
+                                <td ng-if="item.id_ubicacion != 69" class="uk-text-center">{{item.esperadas | number}}</td>
+                                <td ng-if="item.id_ubicacion != 69" class="uk-text-center">{{item.capturadas | number}}</td>
+                                <td ng-if="item.id_ubicacion != 69" class="uk-text-center">{{item.contabilizadas | number}}</td>
+                                <td ng-if="item.id_ubicacion != 69" class="uk-text-center">{{item.no_contabilizadas | number}}</td>
+                                <td ng-if="item.id_ubicacion != 69" class="uk-text-center">{{item.con_inconsistencia | number}}</td>
+                                <th ng-if="item.id_ubicacion != 69" class="md-delete-border"></th>
+                                <td ng-if="item.id_ubicacion != 69" class="uk-text-center">{{item.total_lista_nominal | number}}</td>
+                                <td ng-if="item.id_ubicacion != 69" class="uk-text-center">{{item.votos_scs | number}}</td>
+                                <td ng-if="item.id_ubicacion != 69" class="uk-text-center">{{item.lncontabilizada| number}}</td>
+                                <td ng-if="item.id_ubicacion != 69" class="uk-text-center">{{item.participacion_ppci}}%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

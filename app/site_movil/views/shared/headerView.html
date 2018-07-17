@@ -1,0 +1,25 @@
+<!-- main header -->
+<header id="header_main" class=" m-header" ng-controller="main_headerCtrl" style="height: 50px;">
+    <div class="m-header_main_content">
+        <nav class="uk-navbar uk-nav-small uk-text-small">
+            <!-- <div class="main_logo_top" ng-if="topMenuActive || fullHeaderActive">
+                <a ui-sref="restricted.dashboard">
+                    <img ng-src="assets/img/logo_main_white.png" alt="" add-image-prop/>
+                </a>
+            </div> -->
+            <!-- main sidebar switch -->
+            <sidebar-primary-toggle></sidebar-primary-toggle>
+            <!-- secondary sidebar switch -->
+            <sidebar-secondary-toggle ng-class="{ 'uk-hidden-large': secondarySidebarHiddenLarge }"></sidebar-secondary-toggle>
+            
+            <div class="uk-grid uk-grid-small">
+                <div class="uk-grid-small-1-2">
+                    <img class="m-header-img" ng-src="assets/img/logoPREP.png" alt="Logo PREP" />
+                </div>
+                <div class="uk-grid-small-1-2">
+                    <p class="uk-text-lead uk-text-small uk-text-center uk-text-middle m-header-texto-encabezado">Elecciones Estatales Guanajuato</p>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>

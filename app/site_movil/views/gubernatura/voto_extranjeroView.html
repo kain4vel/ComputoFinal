@@ -1,0 +1,78 @@
+<div class="uk-grid-small uk-margin-remove">
+    <div ng-include src="'app/site_movil/views/shared/avanceView.html'"></div>
+</div>
+
+<div class="uk-grid uk-margin-remove">
+    <div class="uk-width-1-1 uk-padding-add uk-text-right uk-margin-remove">
+        <a ng-click="reload()" class="uk-button uk-margin-remove uk-button-small m-background-purple m-font-color-white">
+            <i class="material-icons m-font-color-white">refresher</i> Actualizar
+        </a>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small-1-1 uk-flex uk-flex-center" id="page_content">
+    <div class="uk-width-1-1 uk-margin-left">
+        <h3 class="md-color-pink uk-margin-remove">Gubernatura
+            <span class="md-color-purple">> Voto desde el extrajero</span>
+        </h3>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small uk-flex uk-flex-center">
+    <div class="md-card uk-grid uk-grid-small uk-margin-remove">
+        <div class="uk-width-1-1 uk-padding-remove">
+            <div class="uk-slidenav-position" data-uk-slideshow="{animation:'scroll'}">
+                <ul class="uk-slideshow">
+                    <li ng-repeat="item in entidad.casillas.DATA">
+                        <table class="uk-table uk-table-small uk-table-responsive uk-text-center uk-table-striped uk-text-small">
+                            <thead>
+                                <tr class="m-encabezado-table-seccion-casilla">
+                                    <td class="uk-width-1-1" colspan="2">
+                                        <p class="uk-text-center uk-text-bold uk-margin-none m-quita-margin uk-text-middle m-encabezado-extrajenro">Mesa de escrutinio y cómputo: {{item.TITULO}}</p>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="partidos in encabezados">
+                                    <td class="uk-width-1-2 uk-text-center">
+                                        <img class="logo-tabla" ng-if="partidos.nombrecorto != '' " ng-src="assets/img/logos_partidos/{{partidos.nombrecorto}}.png">
+                                        <p class="uk-margin-bottom-remove uk-margin-top-remove" ng-if="partidos.nombrecorto == '' ">{{partidos.nombre}}</p>
+                                    </td>
+                                    <td ng-if="!$last" class="uk-width-1-2 uk-text-bold uk-text-center">
+                                        {{ item.RESULTADOS[$index] | number }}
+                                        <br> Votos
+                                    </td>
+                                    <td ng-if="$last" class="uk-width-1-2 uk-text-bold uk-text-center">
+                                        {{ item.TOTALCALCULADO | number }}
+                                        <br> Votos
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="uk-width-1-2 uk-text-bold">Observaciones</td>
+                                    <td class="uk-width-1-2 uk-text-bold">{{ item.OBSERVACION }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="uk-width-1-1 uk-text-center uk-text-bold">
+                                        Estadística de Mesa de escutinio y cómputo {{item.TITULO}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="uk-text-bold uk-text-center uk-width-1-2">Participacion ciudadana</td>
+                                    <td class="uk-text-bold uk-text-center uk-width-1-2">Lista nominal</td>
+                                </tr>
+                                <tr>
+                                    <td class="uk-text-center">{{ item.PARTICIPACION }}%</td>
+                                    <td class="uk-text-center">{{ item.LN | number }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </li>
+                </ul>
+                <a href="" class="uk-slidenav uk-slidenav-previous m-flechas" data-uk-slideshow-item="previous"></a>
+                <a href="" class="uk-slidenav uk-slidenav-next m-flechas" data-uk-slideshow-item="next"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>

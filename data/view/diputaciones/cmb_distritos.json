@@ -1,0 +1,89 @@
+[{
+    "titulo": "Distrito I",
+    "valor": 47,
+    "nombre": "Distrito I. Dolores Hidalgo C.I.N."
+}, {
+    "titulo": "Distrito II",
+    "valor": 48,
+    "nombre": "Distrito II. San Luis de la Paz"
+}, {
+    "titulo": "Distrito III",
+    "valor": 49,
+    "nombre": "Distrito III. León"
+}, {
+    "titulo": "Distrito IV",
+    "valor": 50,
+    "nombre": "Distrito IV. León"
+}, {
+    "titulo": "Distrito V",
+    "valor": 51,
+    "nombre": "Distrito V. León"
+}, {
+    "titulo": "Distrito VI",
+    "valor": 52,
+    "nombre": "Distrito VI. León"
+}, {
+    "titulo": "Distrito VII",
+    "valor": 53,
+    "nombre": "Distrito VII. León"
+}, {
+    "titulo": "Distrito VIII",
+    "valor": 54,
+    "nombre": "Distrito VIII. Guanajuato"
+}, {
+    "titulo": "Distrito IX",
+    "valor": 55,
+    "nombre": "Distrito IX. San Miguel de Allende"
+}, {
+    "titulo": "Distrito X",
+    "valor": 56,
+    "nombre": "Distrito X. San Frencisco del Rincon"
+}, {
+    "titulo": "Distrito XI",
+    "valor": 57,
+    "nombre": "Distrito XI. Irapuato"
+}, {
+    "titulo": "Distrito XII",
+    "valor": 58,
+    "nombre": "Distrito XII. Irapuato"
+}, {
+    "titulo": "Distrito XIII",
+    "valor": 59,
+    "nombre": "Distrito XIII. Silao de la Victoria"
+}, {
+    "titulo": "Distrito XIV",
+    "valor": 60,
+    "nombre": "Distrito XIV. Salamanca"
+}, {
+    "titulo": "Distrito XV",
+    "valor": 61,
+    "nombre": "Distrito XV. Celaya"
+}, {
+    "titulo": "Distrito XVI",
+    "valor": 62,
+    "nombre": "Distrito XVI. Celaya"
+}, {
+    "titulo": "Distrito XVII",
+    "valor": 63,
+    "nombre": "Distrito XVII. Santa Cruz de Juventino Rosas"
+}, {
+    "titulo": "Distrito XVIII",
+    "valor": 64,
+    "nombre": "Distrito XVIII. Penjamo"
+}, {
+    "titulo": "Distrito XIX",
+    "valor": 65,
+    "nombre": "Distrito XIX. Valle de Santiago"
+}, {
+    "titulo": "Distrito XX",
+    "valor": 66,
+    "nombre": "Distrito XX. Yuriria"
+}, {
+    "titulo": "Distrito XXI",
+    "valor": 67,
+    "nombre": "Distrito XXI. León"
+}, {
+    "titulo": "Distrito XXII",
+    "valor": 68,
+    "nombre": "Distrito XXII. Acambaro"
+}]

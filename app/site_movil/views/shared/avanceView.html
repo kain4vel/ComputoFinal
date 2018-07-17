@@ -1,0 +1,30 @@
+<br>
+<div class="uk-grid uk-grid-small" data-uk-grid-margin data-uk-grid-match="{target:'.md-card'}">
+    <div class="uk-width-1-2">
+        <div class="toolbar-fixed">
+            <div class="md-card-content">
+                <h6 class="m-quita-margin">Actas capturadas:</h6>
+                <span class="uk-text-small">{{entidad.resumen.actas_capturadas | number}} de {{entidad.resumen.actas_esperadas | number}}
+                    <span class="uk-text-bold">({{entidad.resumen.actas_p_capturadas }}%)</span>
+                </span>
+               
+                <h6 class="m-quita-margin"> <a href="https://prepgto2018.ieeg.mx/ayuda/pages/acerca_voto/acerca_voto.html" target="_blank">
+                    <i class="material-icons md-color-purple">help</i> Participación ciudadana:</a></h6>
+                <span class="uk-text-small">{{entidad.resumen.participacion_ciudadana }}%</span>
+            </div>
+        </div>
+    </div>
+    <div class="uk-width-1-2">
+        <div class="toolbar-fixed">
+            <div class="md-card-content uk-text-small uk-text-center">
+                <div class="md-list-content">
+                    <h6 class="m-quita-margin">
+                    <img class="md-user-image md-list-addon-avatar" ng-src="assets/img/clock.png" alt="" /> Último corte:</h6>
+                    <span class="uk-text-small md-list-heading">{{entidad.resumen.fecha_hora}} h <a href="http://www.cenam.mx/hora_oficial/" target="_blank">(UTC-5)</a>,</span>
+                    <span class="uk-text-small uk-text-small uk-text-muted">{{entidad.resumen.fecha_corte}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>

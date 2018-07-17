@@ -1,0 +1,142 @@
+<div id="page_content">
+    <div id="top_bar">
+        <div ncy-breadcrumb></div>
+    </div>
+    <div id="page_content_inner">
+
+        <div class="uk-grid uk-grid-medium uk-margin-bottom">
+            <div class="uk-width-large-1-5 uk-width-small-1-1">
+                <h3>
+                    <span>
+                        <input type="radio" name="radio_diputaciones" id="radio" icheck ng-model="radio_diputaciones" value="1" ng-change="getVal()"/>
+                        <label for="radio" class="inline-label">Distritos</label>
+                    </span>
+                </h3>
+            </div>
+            <div class="uk-width-large-3-5 uk-width-small-1-1">
+                <h3>
+                    <span class="md-color-pink">
+                        <input type="radio" name="radio_diputaciones" id="radio_pp_ci" icheck ng-model="radio_diputaciones" value="2" ng-checked="true" ng-change="getVal()"/>
+                        <label for="radio_pp_ci" class="inline-label">Votos por Partido Político y Candidatura Independiente</label>
+                    </span>
+                </h3>
+            </div>
+            <div class="uk-width-large-1-5 uk-width-small-1-1 uk-text-right">
+                <a ng-click="reload()" class="md-btn md-btn-small md-bg-purple md-color-white md-btn-wave-light md-btn-icon">
+                    <i class="material-icons md-color-white uk-margin-right">loop</i>Actualizar
+                </a>
+            </div>
+        </div>
+
+        <div ng-include src="'app/site_desktop/views/shared/avanceView.html'"></div>
+
+        <div class="uk-grid uk-grid-medium">
+            <div class="uk-width-large-4-5 uk-width-medium-1-2 uk-width-small-1-1">
+                <h2 class="uk-margin-bottom uk-margin-top md-color-pink">Diputaciones
+                    <span class="md-color-purple">- Entidad</span>
+                </h2>
+                <ul class="md-list md-list-addon">
+                    <li>
+                        <div class="md-list-addon-element">
+                            <i class="material-icons md-color-pink md-list-addon-icon">info</i>
+                        </div>
+                        <div class="md-list-content">
+                            <span class="uk-text-small">El total de votos calculado y porcentaje que se muestran, se refieren a los votos asentados
+                                    en las Actas PREP hasta el momento.</span>
+                            <span class="uk-text-small">Por presentación, los decimales de los porcentajes muestran sólo cuatro dígitos. No obstante, al considerar
+                                    todos los decimales, suman 100%.</span>
+                            <span class="uk-text-small">Los votos recibidos vía coalición serán agregados hasta el último corte del PREP.</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="uk-width-large-1-5 uk-width-medium-1-2 uk-width-small-1-1 uk-text-right">
+                <br/>
+                <a ui-sref="desktop.basedatos" class="md-btn md-btn-small md-bg-grey-800 md-color-white md-btn-wave-light md-btn-icon btn-descargar">
+                    <i class="uk-icon-download md-color-white"></i>
+                    Base de datos
+                </a>
+            </div>
+        </div>
+
+        <div class="md-card uk-margin-bottom">
+            <div class="md-card-content">
+                 <div class="uk-width-large-1-1 uk-text-left">
+                    <div data-double-scroll-bar-horizontal>
+                         <table class="uk-table uk-table-border">
+                            <thead>
+                                <tr>
+                                    <th ng-repeat="x in [].constructor(14) track by $index" ng-class="{'chart-bg td-relative': !$first}"></th>
+                                </tr>
+                                <tr>
+                                    <td  class="td-relative table-bordered-header remove-border-bottom">
+                                        <div class="my-chart-label uk-text-bold">Votos</div>
+                                        <div class="line-chart-nl line-chart-100 line-char-first uk-text-bold">{{(intervalo * 5)}}</div>
+                                        <div class="line-chart-nl line-chart-80 line-char-first uk-text-bold">{{(intervalo * 4)}}</div>
+                                        <div class="line-chart-nl line-chart-60 line-char-first uk-text-bold">{{(intervalo * 3)}}</div>
+                                        <div class="line-chart-nl line-chart-40 line-char-first uk-text-bold">{{(intervalo * 2)}}</div>
+                                        <div class="line-chart-nl line-chart-20 line-char-first uk-text-bold">{{(intervalo * 1)}}</div>
+                                        <div class="line-chart-nl line-chart-0 line-char-first uk-text-bold">0</div>
+                                        <div class="my-chart">
+                                            <div class="my-char-item " style="height: 200px"></div>
+                                        </div>
+                                    </td>
+                                    <td class="chart-bg td-relative" ng-repeat="item in entidad.resumen_entidad_pp_ci.total_votos track by $index">
+                                        <div class="line-chart line-chart-100"></div>
+                                        <div class="line-chart line-chart-80"></div>
+                                        <div class="line-chart line-chart-60"></div>
+                                        <div class="line-chart line-chart-40"></div>
+                                        <div class="line-chart line-chart-20"></div>
+                                        <div class="line-chart-nl line-chart-0"></div>
+                                        <div class="progress progress-bar-vertical" ng-if="!$last">
+                                            <div aria-valuemax="100" aria-valuemin="0" class="progress-bar" ng-style="{'height': {{( item*100)/max }} + '%'}" data-uk-tooltip="{pos:'left'}" title="{{item | number}} votos">
+                                            </div>
+                                            <!-- <div aria-valuemax="100" aria-valuemin="0" class="progress-bar" ng-if="(((item*100)/250000) >= 1)" ng-style="{'height': {{( item*100)/250000 }} +'%'};" data-uk-tooltip="{pos:'left'}" title="{{item | number}} votos">
+                                            </div>
+                                            <div aria-valuemax="100" aria-valuemin="0" class="progress-bar" ng-if="(((item*100)/250000) < 1 && item != 0)" ng-style="{'height': .5 +'%'};" data-uk-tooltip="{pos:'left'}" title="{{item | number}} votos">
+                                            </div>
+                                            <div aria-valuemax="100" aria-valuemin="0" class="progress-bar" ng-if="(item == 0)" ng-style="{'height': .5 + '%'};" data-uk-tooltip="{pos:'left'}" title="{{item | number}} votos">
+                                            </div> -->
+                                        </div>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-bottom-pink">
+                                    <td></td>
+                                    <td class="uk-text-center uk-vertical-center sinBorde" ng-repeat="item in encabezados">
+                                        <img class="logo-tabla" ng-if="item.nombrecorto != '' " ng-src="assets/img/logos_partidos/{{item.nombrecorto}}.png">
+                                        <p class="uk-margin-bottom-remove uk-margin-top-remove" ng-if="item.title != '' ">{{item.title}}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="md-bg-grey-100 uk-text-bold">Total de votos</td>
+                                    <td class="uk-text-center uk-vertical-center md-bg-pink-50" ng-repeat="item in entidad.resumen_entidad_pp_ci.total_votos track by $index">{{item | number}}</td>
+                                </tr>
+                                <tr class="border-bottom-pink">
+                                    <td class="md-bg-grey-100 uk-text-bold">Porcentaje</td>
+                                    <td class="uk-text-center uk-vertical-center md-bg-pink-50" ng-repeat="item in entidad.resumen_entidad_pp_ci.porcentaje track by $index">{{item}}%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                    </div>
+                    <p>En esta tabla no se considera la cantidad de votos asentada en las Actas PREP de Casilla Especial
+                        de Representación Proporcional.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="uk-width-large-1-1 uk-text-right">
+            <a ui-sref="desktop.diputaciones_entidad_detalle_pp_ci" class="md-btn md-btn-wave waves-effect waves-button md-btn-small md-color-purple-900 btn-detalle">
+                Ver detalle de la Entidad
+            </a>
+            <a ui-sref="desktop.basedatos" class="md-btn md-btn-small md-bg-grey-800 md-color-white md-btn-wave-light md-btn-icon btn-descargar">
+                <i class="uk-icon-download md-color-white"></i>
+                Base de datos
+            </a>
+        </div>
+
+        <div ng-include src="'app/site_desktop/views/shared/ultimo_corte.html'"></div>
+    </div>
+</div>

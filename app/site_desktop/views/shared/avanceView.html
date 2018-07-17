@@ -1,0 +1,32 @@
+<h3 class="uk-margin-bottom">Avance</h3>
+<div class="uk-grid uk-grid-medium" data-uk-grid-margin data-uk-grid-match="{target:'.md-card'}">
+    <div class="uk-width-medium-1-3">
+        <h5 class="uk-margin-bottom-remove">Actas capturadas:</h5>
+        <h3 class="uk-margin-top-remove">{{entidad.resumen.actas_capturadas | number}} de {{entidad.resumen.actas_esperadas | number}} <span class="uk-text-bold">({{entidad.resumen.actas_p_capturadas}}%)</span></h3>
+    </div>
+    <div class="uk-width-medium-1-3">
+        <h5 class="uk-margin-bottom-remove"><a href="#modal_info_participacion" data-uk-modal><i class="material-icons md-color-purple-900">help</i> Participación ciudadana: </a><span class="heading_a">{{entidad.resumen.participacion_ciudadana}}%</span></h5>
+        <div class="uk-progress uk-margin-remove">
+            <div class="uk-progress-bar md-bg-purple" ng-style="{'width': {{entidad.resumen.participacion_ciudadana | number}} + '%'}"></div>
+        </div>
+    </div>
+    <div class="uk-width-medium-1-3 uk-text-right">
+            <img class="md-user-image md-list-addon-avatar" ng-src="assets/img/clock.png" alt="" style="display: inline-block; margin-top: -20px; margin-right: 10px;" />
+            <p class="" style="display: inline-block;">Último corte: <b>{{entidad.resumen.fecha_hora}} horas</b> <a href="http://www.cenam.mx/hora_oficial/" target="_blank">(UTC-5)</a> <br/> tiempo del centro, <b>{{entidad.resumen.fecha_corte}}</b></p>
+    </div>
+</div>
+<div class="uk-modal" id="modal_info_participacion">
+    <div class="uk-modal-dialog">
+        <button type="button" class="uk-modal-close uk-close"></button>
+        <div class="uk-modal-header">
+            <h3 class="uk-modal-title md-color-purple">Conoce cómo calcular el porcentaje de participación ciudadana.</h3>
+        </div>
+        <p class="uk-text-justify">
+                La Participación ciudadana es el porcentaje de ciudadanos que votaron, con base en la Lista Nominal de las Actas Contabilizadas.<br/><br/>
+                Por ejemplo, si en una casilla votan 500 electores y el número de personas inscritas en la Lista Nominal para esa casilla es de 750 ciudadanos entonces:<br/><br/>
+                Dividimos 500 entre 750, y el resultado lo multiplicamos por 100.<br/><br/>
+                La votación emitida en las casillas especiales se tomará en cuenta para el cálculo de la participación ciudadana, hasta el último corte de información que se publique en el PREP.
+        </p>
+        
+    </div>
+</div>

@@ -1,0 +1,306 @@
+<div class="uk-grid-small uk-margin-remove">
+    <div ng-include src="'app/site_movil/views/shared/avanceView.html'"></div>
+</div>
+
+<div class="uk-grid uk-margin-remove">
+    <div class="uk-width-1-1 uk-padding-add uk-text-right uk-margin-remove">
+        <a ng-click="reload()" class="uk-button uk-margin-remove uk-button-small m-background-purple m-font-color-white">
+            <i class="material-icons m-font-color-white">refresher</i> Actualizar
+        </a>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-margin-remove">
+    <a ui-sref="movil.ayuntamientos_municipios_detalle({id_ubicacion : 1})" class="uk-width-1-2 uk-text-center uk-text-small uk-text-middle m-background-purple m-button-firts m-background-purple-active">Votos por Candidatura</a>
+    <a ui-sref="movil.ayuntamientos_municipios_detalle_pp_ci({id_ubicacion : 1})" class="uk-width-1-2 uk-text-center uk-text-small uk-text-middle m-background-purple m-button-second">Votos por Partido Político y Candidatura Independiente</a>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small-1-1 uk-flex uk-flex-center" id="page_content">
+    <div class="uk-width-1-1 uk-margin-left">
+        <h3 class="md-color-pink uk-margin-remove">Ayuntamientos
+            <span class="md-color-purple">- Detalle del Municipio</span>
+        </h3>
+        <h5 class="md-color-purple-900 uk-margin-remove">{{(cmb_municipios_data | filter:{valor : municipios_cmb})[0].nombre }} </h5>
+        <label>Votos por Candidatura</label>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small-1-1 uk-flex uk-flex-center" id="page_content">
+    <div class="md-card">
+        <div class="uk-grid m-background-purple-combobox">
+            <div class="uk-width-1-5"></div>
+            <div class="uk-width-3-5">
+                <p class="uk-text-center m-encabezdo-texto-otros-votos">Distrito:</p>
+                <input type="text" config="cmb_municipios_config" options="cmb_municipios_data" ng-model="municipios_cmb" name="municipios_cmb"
+                    selectize class="uk-form-width-meddim uk-text-center" />
+            </div>
+            <div class="uk-width-1-5"></div>
+        </div>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small-1-1 uk-flex uk-flex-center" id="page_content">
+    <div class="md-card uk-grid uk-grid-small uk-margin-remove">
+        <div class="uk-width-1-1 uk-padding-remove">
+            <table class="uk-table uk-table-small uk-table-responsive uk-table-striped uk-text-center">
+                <thead>
+                    <tr class="m-table-result-total uk-text-center">
+                        <th class="uk-width-1-1 uk-text-middle mo-border-total" colspan="2">
+                            <div class="uk-grid">
+                                <div class="uk-width-1-2 uk-text-right mo-border-right">
+                                    <p class="uk-text-small uk-text-bold">Total de votos</p>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-left">
+                                    <p class="uk-text-small uk-text-bold">{{ (entidad.distribucion_entidad | filter : { id_ubicacion : municipios_cmb })[0].total_votos[
+                                        (((entidad.distribucion_entidad | filter : { id_ubicacion : municipios_cmb })[0].total_votos
+                                        | filter:query).length - 1)] | number : 0}}</p>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in (encabezados | filter : { IDUBICACION : municipios_cmb })[0].DATA">
+                        <th class="uk-width-1-1 uk-text-middle uk-text-center">
+                            <div class="uk-grid">
+                                <div class="uk-width-1-1 uk-text-bold">
+                                    <img class="logo-tabla" ng-if="item.nombrecorto != '' " ng-src="assets/img/logos_partidos/{{item.nombrecorto}}.png">
+                                    <p class="uk-text-small m-quita-margin uk-text-bold">{{item.candidato}}</p>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-right">
+                                    <p class="uk-text-small uk-text-bold uk-text-right m-quita-margin uk-text-bold">{{ (entidad.distribucion_entidad | filter : { id_ubicacion : municipios_cmb })[0].porcentaje[$index]
+                                        }}%
+                                    </p>
+                                    <div class="uk-progress m-progress-bar-gobernador m-progress-height-15 m-quita-margin">
+                                        <div ng-style="{ 'width': {{ (entidad.distribucion_entidad | filter : { id_ubicacion : municipios_cmb })[0].porcentaje[$index] }} + '%' }"
+                                            class="uk-progress-bar m-quita-margin"></div>
+                                    </div>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-bold uk-vertical-center uk-text-center">
+                                    <p class="uk-text-small uk-text-bold m-quita-margin m-font-size-10" ng-if="(entidad.distribucion_entidad | filter : { id_ubicacion : municipios_cmb })[0].info[$index] != -1">
+                                        Total de votos
+                                        <br> {{ (entidad.distribucion_entidad | filter : { id_ubicacion : municipios_cmb })[0].total_votos[$index]
+                                        | number }}
+                                    </p>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+
+                    <tr>
+                        <th class="uk-width-1-1 uk-text-middle uk-text-center">
+                            <div class="uk-grid">
+                                <div class="uk-width-1-1 uk-text-bold">
+                                    <img class="logo-tabla" ng-if="item.nombrecorto != '' " ng-src="assets/img/logos_partidos/{{item.nombrecorto}}.png">
+                                    <p class="uk-text-small m-quita-margin uk-text-bold">Candidaturas no registradas</p>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-right">
+                                    <p class="uk-text-small uk-text-bold uk-text-right m-quita-margin uk-text-bold">{{ (entidad.distribucion_entidad | filter : { id_ubicacion : municipios_cmb })[0].porcentaje[
+                                        (((entidad.distribucion_entidad | filter : { id_ubicacion : municipios_cmb })[0].porcentaje
+                                        | filter:query).length - 3)] }}%
+                                    </p>
+                                    <div class="uk-progress m-progress-bar-gobernador m-progress-height-15 m-quita-margin">
+                                        <div ng-style="{ 'width': {{ (entidad.distribucion_entidad | filter : { id_ubicacion : municipios_cmb })[0].porcentaje[$index] }} + '%' }"
+                                            class="uk-progress-bar m-quita-margin"></div>
+                                    </div>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-bold uk-vertical-center uk-text-center">
+                                    <p class="uk-text-small uk-text-bold m-quita-margin m-font-size-10" ng-if="(entidad.distribucion_entidad | filter : { id_ubicacion : municipios_cmb })[0].info[$index] != -1">
+                                        Total de votos
+                                        <br> {{ (entidad.distribucion_entidad | filter : { id_ubicacion : municipios_cmb })[0].total_votos[
+                                        (((entidad.distribucion_entidad | filter : { id_ubicacion : municipios_cmb })[0].total_votos
+                                        | filter:query).length - 3)] | number }}
+                                    </p>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="uk-width-1-1 uk-text-middle uk-text-center">
+                            <div class="uk-grid">
+                                <div class="uk-width-1-1 uk-text-bold">
+                                    <img class="logo-tabla" ng-if="item.nombrecorto != '' " ng-src="assets/img/logos_partidos/{{item.nombrecorto}}.png">
+                                    <p class="uk-text-small m-quita-margin uk-text-bold">Votos nulos</p>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-right">
+                                    <p class="uk-text-small uk-text-bold uk-text-right m-quita-margin uk-text-bold">{{ (entidad.distribucion_entidad | filter : { id_ubicacion : municipios_cmb })[0].porcentaje[
+                                        (((entidad.distribucion_entidad | filter : { id_ubicacion : municipios_cmb })[0].porcentaje
+                                        | filter:query).length - 2)] }}%
+                                    </p>
+                                    <div class="uk-progress m-progress-bar-gobernador m-progress-height-15 m-quita-margin">
+                                        <div ng-style="{ 'width': {{ (entidad.distribucion_entidad | filter : { id_ubicacion : municipios_cmb })[0].porcentaje[ (((entidad.distribucion_entidad
+                                        | filter : { id_ubicacion : municipios_cmb })[0].porcentaje | filter:query).length - 2)] }} + '%' }"
+                                            class="uk-progress-bar m-quita-margin"></div>
+                                    </div>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-bold uk-vertical-center uk-text-center">
+                                    <p class="uk-text-small uk-text-bold m-quita-margin m-font-size-10" ng-if="(entidad.distribucion_entidad | filter : { id_ubicacion : municipios_cmb })[0].info[$index] != -1">
+                                        Total de votos
+                                        <br> {{ (entidad.distribucion_entidad | filter : { id_ubicacion : municipios_cmb })[0].total_votos[
+                                        (((entidad.distribucion_entidad | filter : { id_ubicacion : municipios_cmb })[0].total_votos
+                                        | filter:query).length - 2)] | number : 0 | number }}
+                                    </p>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small-1-1 uk-flex uk-flex-center" id="page_content">
+    <div class="uk-width-1-4"></div>
+    <div class="uk-width-3-4 uk-grid-small uk-text-right">
+        <button ui-sref="movil.ayuntamientos_seccion_municipio({id_ubicacion : municipios_cmb})" class="uk-button uk-text-small m-background-purple">Ver Detalle por Secciones</button>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small-1-1 uk-flex uk-flex-center" id="page_content">
+    <div class="md-card">
+        <div class="uk-width-small-1-1 uk-padding-add">
+            <h4 class="md-color-purple uk-margin-remove">Distribución de votos por candidatura a nivel Ayutamiento</h4>
+            <h3 class="uk-text-small uk-margin-remove uk-text-justify"> La tabla muestra el desglose de votos que cada candidatura presenta en el Distrito, indicando los votos recibidos
+                de manera individual y, en su caso, los votos recibidos vía coalición. </h3>
+            <h5 class="md-bg-grey-200 uk-padding-add">
+                <a href="https://prepgto2018.ieeg.mx/ayuda/pages/acerca_voto/acerca_voto_1.html"  target="_blank" class="uk-text-small uk-text-center"> Conoce cómo se suman los votos para Candidaturas de Coalición.</a>
+            </h5>
+        </div>
+        <div class="uk-width-small-1-1 uk-padding-add">
+            <table class="uk-table uk-table-small uk-table-striped uk-table-responsive">
+                <thead>
+                    <tr class="uk-text-bold border-bottom-pink uk-text-center">
+                        <th>
+                            <div class="uk-grid uk-grid-small uk-text-center">
+                                <div class="uk-width-1-3 uk-text-middle uk-vertical-center">
+                                    Candidaturas
+                                </div>
+                                <div class="uk-width-2-3 uk-text-middle uk-vertical-center">
+                                    Distribución de votos por candidatura
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in (encabezados | filter : { IDUBICACION : municipios_cmb })[0].DATA">
+                        <td>
+                            <div class="uk-grid uk-grid-small uk-text-small uk-child-width-1-3@m uk-child-width-1-2@s" uk-grid>
+                                <div class="uk-width-1-3 mo-div-border-right">
+                                    <p class="uk-text-middle">{{item.candidato}}</p>
+                                </div>
+                                <div class="uk-width-2-3 uk-text-center">
+                                    <div ng-repeat="a in (entidad.distribucion_entidad | filter : { id_ubicacion : municipios_cmb })[0].distribucion[$index].desglose"
+                                        class="uk-display-inline-block uk-text-center">
+                                        <div class="uk-display-inline-block" class="uk-display-inline-block uk-text-center">
+                                            {{ a.votos | number }}
+                                            <br>
+                                            <img class="logo-tabla uk-margin-small-left uk-margin-small-right" ng-src="assets/img/logos_partidos/{{a.nombrecorto}}.png">
+                                        </div>
+                                        <i class="material-icons md-color-black" ng-if="!$last">add_circle</i>
+                                    </div>
+                                </div>
+                                <div class="uk-width-1-1 uk-text-center">
+                                    Total de votos por candidatura = {{ (entidad.distribucion_entidad | filter : { id_ubicacion : municipios_cmb })[0].distribucion[$index].votos_candidatos
+                                    | number }}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small-1-1 uk-flex uk-flex-center" id="page_content">
+    <div class="uk-width-1-4"></div>
+    <div class="uk-width-3-4 uk-grid-small uk-text-right">
+        <button ui-sref="movil.ayuntamientos_seccion_municipio({id_ubicacion : municipios_cmb})" class="uk-button uk-text-small m-background-purple">Ver Detalle por Secciones</button>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small-1-1 uk-flex uk-flex-center" id="page_content">
+    <div class="md-card">
+        <div class="uk-width-1-1 uk-padding-add">
+            <table class="uk-table uk-table-striped">
+                <thead>
+                    <tr>
+                        <th colspan="3" style="border-bottom: 0px !important;">
+                            <h4 class="uk-margin-remove md-color-pink">Estadística de Ayuntamientos - Detalle del Municipio</h4>
+                            <h5 class="uk-margin-remove md-color-purple-900">{{(cmb_municipios_data | filter:{valor : municipios_cmb})[0].nombre }}</h5>
+                        </th>
+                    </tr>
+                    <tr class="border-bottom-pink ">
+                        <th class="uk-text-left">Actas por Distrito</th>
+                        <th class="uk-text-center">Total</th>
+                        <th class="uk-text-center">Porcentaje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Esperadas</td>
+                        <td class="uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{ id_ubicacion : municipios_cmb})[0].esperadas }}</td>
+                        <td class="uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{ id_ubicacion : municipios_cmb})[0].esperadas_porcentaje}}%</td>
+                    </tr>
+                    <tr>
+                        <td>Capturadas</td>
+                        <td class="uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{ id_ubicacion : municipios_cmb})[0].capturadas}}</td>
+                        <td class="uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{ id_ubicacion : municipios_cmb})[0].capturadas_porcentaje}}%</td>
+                    </tr>
+                    <tr>
+                        <td>Contabilizadas</td>
+                        <td class="uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{ id_ubicacion : municipios_cmb})[0].contabilizadas}}</td>
+                        <td class="uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{ id_ubicacion : municipios_cmb})[0].contabilizadas_porcentaje}}%</td>
+                    </tr>
+                    <tr>
+                        <td>No Contabilizadas</td>
+                        <td class="uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{ id_ubicacion : municipios_cmb})[0].no_contabilizadas}}</td>
+                        <td class="uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{ id_ubicacion : municipios_cmb})[0].no_contabilizadas_porcentaje}}%</td>
+                    </tr>
+                    <tr>
+                        <td>Con Inconsistencia</td>
+                        <td class="uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{ id_ubicacion : municipios_cmb})[0].con_inconsistencia}}</td>
+                        <td class="uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{ id_ubicacion : municipios_cmb})[0].con_inconsistencia_porcentaje}}%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="uk-width-1-1 uk-padding-add">
+            <table class="uk-table uk-table-striped">
+                <thead>
+                    <tr>
+                        <th colspan="3" style="border-bottom: 0px !important;">
+                            <h4 class="uk-margin-remove md-color-pink"> Participación ciudadana respecto a las Actas Contabilizadas</h4>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Total de la lista nominal</td>
+                        <td class="uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{ id_ubicacion : municipios_cmb})[0].total_lista_nominal
+                            | number }}</td>
+                    </tr>
+                    <tr>
+                        <td>Total de votos</td>
+                        <td class="uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{ id_ubicacion : municipios_cmb})[0].votos_scs | number
+                            }} </td>
+                    </tr>
+                    <tr>
+                        <td>Lista nominal de actas contabilizadas</td>
+                        <td class="uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{ id_ubicacion : municipios_cmb})[0].lncontabilizada
+                            | number }}</td>
+                    </tr>
+                    <tr>
+                        <td>Participación ciudadana respecto a las Actas Contabilizadas</td>
+                        <td class="uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{ id_ubicacion : municipios_cmb})[0].participacion_ppci
+                            }}% </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<br>

@@ -1,0 +1,256 @@
+<div id="page_content">
+    <div id="top_bar">
+        <div ncy-breadcrumb></div>
+    </div>
+    <div id="page_content_inner">
+
+        <div class="uk-grid uk-grid-medium uk-margin-bottom">
+            <div class="uk-width-large-1-5 uk-width-small-1-1">
+                <h3>
+                    <span>
+                        <input type="radio" name="radio_municipios" id="radio" icheck ng-model="radio_municipios" value="1"  ng-change="getVal()"/>
+                        <label for="radio" class="inline-label">Votos por Candidaturas</label>
+                    </span>
+                </h3>
+            </div>
+            <div class="uk-width-large-3-5 uk-width-small-1-1">
+                <h3>
+                    <span class="md-color-pink">
+                        <input type="radio" name="radio_municipios" id="radio_pp_ci" icheck ng-model="radio_municipios" value="2" ng-checked="true" ng-change="getVal()"/>
+                        <label for="radio_pp_ci" class="inline-label">Votos por Partido Político y Candidatura Independiente</label>
+                    </span>
+                </h3>
+            </div>
+            <div class="uk-width-large-1-5 uk-width-small-1-1 uk-text-right">
+                <a ng-click="reload()" class="md-btn md-btn-small md-bg-purple md-color-white md-btn-wave-light md-btn-icon">
+                    <i class="material-icons md-color-white uk-margin-right">loop</i>Actualizar
+                </a>
+            </div>
+        </div>
+
+        <div ng-include src="'app/site_desktop/views/shared/avanceView.html'"></div>
+        
+        <div class="uk-grid uk-grid-medium">
+            <div class="uk-width-large-4-5 uk-width-medium-1-2 uk-width-small-1-1">
+                <h2 class="uk-margin-bottom uk-margin-top md-color-pink">Ayuntamientos
+                    <span class="md-color-purple">- Detalle por Municipio</span>
+                </h2>
+                <h2 class="header-a md-color-purple-900 uk-margin-bottom">Municipio {{municipios_cmb}}. {{(cmb_municipios_data | filter:{valor : municipios_cmb})[0].nombre }}</h2>
+            </div>
+            <div class="uk-width-large-1-5 uk-width-medium-1-2 uk-width-small-1-1 uk-text-right ">
+                <br/>
+                <a ui-sref="desktop.basedatos" class="md-btn md-btn-small md-bg-grey-800 md-color-white md-btn-wave-light md-btn-icon btn-descargar">
+                    <i class="uk-icon-download md-color-white"></i>
+                    Base de datos
+                </a>
+            </div>
+        </div>
+
+        <div class="uk-grid uk-grid-large uk-margin-top-remove">
+            <div class="uk-width-large-1-1">
+                <p>Consulta otro Municipio</p>
+                <input type="text" config="cmb_municipios_config" options="cmb_municipios_data" ng-model="municipios_cmb" name="municipios_cmb" selectize class="uk-form-width-large"/>
+
+            </div>
+            
+            <div class="uk-width-large-1-1 uk-margin-top">
+                <ul class="md-list md-list-addon">
+                    <li>
+                        <div class="md-list-addon-element">
+                            <i class="material-icons md-color-pink md-list-addon-icon">info</i>
+                        </div>
+                        <div class="md-list-content">
+                            <span class="uk-text-small">Es posible que se presente un empate entre dos o más partidos políticos, coaliciones o candidaturas independientes y se resolvería hasta el cómputo final.</span>
+                            <span class="uk-text-small">Por presentación, los decimales de los porcentajes muestran sólo cuatro dígitos. No obstante, al considerar todos suman 100%.</span>
+                            <span class="uk-text-small">Los votos recibidos vía coalición serán agregados hasta el último corte del PREP.</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="md-card uk-margin-bottom">
+            <div class="md-card-content">
+                <h3 class="md-color-purple">
+                    Resumen de la votación
+                </h3>
+                <div class="uk-width-large-1-1">
+                    <div data-double-scroll-bar-horizontal>
+                        <table class="uk-table uk-table-striped uk-table-border">
+                            <thead>
+                                <tr class="border-bottom-pink">
+                                    <th></th>
+                                    <th class="uk-text-center uk-vertical-center" ng-repeat="item in (encabezados| filter:{IDUBICACION : municipios_cmb})[0].DATA">
+                                        <img class="logo-tabla" ng-if="(item.nombrecorto == 'CAND_IND_1' || item.nombrecorto == 'CAND_IND_2' || item.nombrecorto == 'CAND_IND_3')" ng-src="assets/img/logos_partidos/independientes/{{item.nombrecorto}}_{{municipios_cmb}}.png">
+                                        <img class="logo-tabla" ng-if="(item.nombrecorto != 'CAND_IND_1' && item.nombrecorto != 'CAND_IND_2' && item.nombrecorto != 'CAND_IND_3')" ng-src="assets/img/logos_partidos/{{item.nombrecorto}}.png">
+                                    </th>
+                                    <th class="uk-text-center">
+                                        <p class="uk-margin-bottom-remove uk-margin-top-remove">Candidaturas no registradas</p>
+                                    </th>
+                                    <th class="uk-text-center">
+                                        <p class="uk-margin-bottom-remove uk-margin-top-remove">Votos nulos</p>
+                                    </th>
+                                    <th class="uk-text-center border-bottom-pink">
+                                        <p class="uk-margin-bottom-remove uk-margin-top-remove">Total</p>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="md-bg-grey-200 uk-text-truncate uk-text-bold">Total de votos</td>
+                                    <td ng-repeat="item in (entidad.distribucion_entidad_pp_ci | filter:{id_ubicacion : municipios_cmb})[0].total_votos track by $index" class="uk-text-center md-bg-pink-50">{{item | number}}</td>
+                                </tr>
+                                <tr class="border-bottom-pink">
+                                    <td class="md-bg-grey-200 uk-text-truncate uk-text-bold">Porcentaje</td>
+                                    <td ng-repeat="item in (entidad.distribucion_entidad_pp_ci | filter:{id_ubicacion : municipios_cmb})[0].porcentaje track by $index" class="uk-text-center md-bg-pink-50">{{item}}%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="uk-width-large-1-1 uk-text-right uk-margin-bottom">
+            <a ui-sref="desktop.ayuntamientos_seccion_municipio({id_ubicacion:municipios_cmb})" class="md-btn md-btn-wave waves-effect waves-button md-btn-small md-color-purple-900 btn-detalle">
+                Ver detalle por Secciones
+            </a>
+            <a ui-sref="desktop.basedatos" class="md-btn md-btn-small md-bg-grey-800 md-color-white md-btn-wave-light md-btn-icon">
+                <i class="uk-icon-download md-color-white"></i>
+                Base de datos
+            </a>
+        </div>
+
+         <div class="md-card uk-margin-bottom uk-margin-large-top">
+            <div class="md-card-content">
+                <h3 class="md-color-purple">
+                    Distribución de votos por candidatura a nivel Municipio
+                </h3>
+                <ul class="md-list md-list-addon">
+                    <li>
+                        <div class="md-list-addon-element">
+                            <i class="material-icons md-color-pink md-list-addon-icon">info</i>
+                        </div>
+                        <div class="md-list-content">
+                            <span class="uk-text-small">La tabla muestra el desglose de votos que cada candidatura presenta en el Municipio, indicando los votos recibidos de manera individual y, en su caso, los votos recibidos vía coalición. </span>
+                            <span class="uk-text-small">Los votos recibidos vía coalición serán agregados hasta el último corte del PREP.</span>
+                            <span class="uk-text-small"><a href="https://prepgto2018.ieeg.mx/ayuda/pages/acerca_voto/acerca_voto_1.html" target="_blank">Conoce cómo se suman los votos para Candidaturas de Coalición de acuerdo a la legislación vigente.</a></span>
+                        </div>
+                    </li>
+                </ul>
+                <div class="uk-width-large-1-1 uk-text-left">
+                    <div class="uk-overflow-container">
+                        <table class="uk-table uk-table-striped">
+                            <thead>
+                                <tr class="border-bottom-pink md-bg-grey-300">
+                                    <th class="uk-text-center">Partidos Políticos</th>
+                                    <th class="uk-text-center">Votos emitidos para el partido</th>
+                                    <th class="uk-text-center">Votos obtenidos vía coalición</th>
+                                    <th class="uk-text-center">Total de votos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in (entidad.distribucion_entidad_pp_ci | filter:{id_ubicacion : municipios_cmb})[0].distribucion" ng-class="{'border-bottom-pink':$last}">
+                                    <td class="uk-text-truncate uk-text-center">
+                                        <img class="logo-tabla" ng-if="(item.nombrecorto == 'CAND_IND_1' || item.nombrecorto == 'CAND_IND_2' || item.nombrecorto == 'CAND_IND_3')" ng-src="assets/img/logos_partidos/independientes/{{item.nombrecorto}}_{{municipios_cmb}}.png">
+                                        <img class="logo-tabla" ng-if="(item.nombrecorto != 'CAND_IND_1' && item.nombrecorto != 'CAND_IND_2' && item.nombrecorto != 'CAND_IND_3')" ng-src="assets/img/logos_partidos/{{item.nombrecorto}}.png">
+                                    </td>
+                                    <td class="uk-text-center uk-vertical-center">{{item.votos_partido | number}}</td>
+                                    <td class="uk-text-center uk-vertical-center">{{item.votos_coalicion | number}}</td>
+                                    <td class="uk-text-center uk-vertical-center">{{item.total | number}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="uk-width-large-1-1 uk-text-right uk-margin-bottom">
+            <a ui-sref="desktop.ayuntamientos_seccion_municipio({id_ubicacion:municipios_cmb})" class="md-btn md-btn-wave waves-effect waves-button md-btn-small md-color-purple-900 btn-detalle">
+                Ver detalle por Secciones
+            </a>
+            <a ui-sref="desktop.basedatos" class="md-btn md-btn-small md-bg-grey-800 md-color-white md-btn-wave-light md-btn-icon">
+                <i class="uk-icon-download md-color-white"></i>
+                Base de datos
+            </a>
+        </div>
+
+        <div class="uk-width-large-1-1">
+            <h4 class="md-color-purple">
+                Último corte:
+                <b>{{entidad.resumen.fecha_hora}} horas</b> <a href="http://www.cenam.mx/hora_oficial/" target="_blank">(UTC-5)</a> Hora local,
+                <b>{{entidad.resumen.fecha_corte}}.</b>
+            </h4>
+        </div>
+
+        <p><i class="material-icons md-color-pink md-list-addon-icon md-24">info</i> Los votos recibidos vía coalición serán agregados hasta el último corte del PREP.</p>
+
+        <div class="md-card uk-margin-top">
+            <div class="md-card-content">
+                <div class="uk-width-large-1-1">
+                    <table class="uk-table uk-table-striped uk-table-border">
+                        <thead>
+                            <tr>
+                                <th class="md-delete-border-title" colspan="6">
+                                    <h3 class="md-color-purple">Actas por Municipio
+                                        <a href="https://prepgto2018.ieeg.mx/ayuda/pages/actas/actas.html" target="_blank"><i class="material-icons md-color-purple-900 uk-margin-left md-24">help</i></a>
+                                    </h3>
+                                </th>
+                                <th class="md-delete-border-title"></th>
+                                <th class="md-delete-border-title uk-width-2-5" colspan="4">
+                                    <h3 class="md-color-purple">Participación ciudadana respecto a las Actas Contabilizadas
+                                        <a href="https://prepgto2018.ieeg.mx/ayuda/pages/acerca_voto/acerca_voto.html" target="_blank"><i class="material-icons md-color-purple-900 uk-margin-left md-24">help</i></a>
+                                    </h3>
+                                </th>
+                            </tr>
+                            </tr>
+                                <tr class="md-bg-grey-200 border-bottom-pink">
+                                <th class="uk-text-bold uk-vertical-center">Actas</th>
+                                <th class="uk-text-center uk-text-bold uk-vertical-center">Esperadas</th>
+                                <th class="uk-text-center uk-text-bold uk-vertical-center">Capturadas</th>
+                                <th class="uk-text-center uk-text-bold uk-vertical-center">Contabilizadas</th>
+                                <th class="uk-text-center uk-text-bold uk-vertical-center">No Contabilizadas</th>
+                                <th class="uk-text-center uk-text-bold uk-vertical-center">Con Inconsistencias</th>
+                                <th class="md-delete-border"></th>
+                                <th class="uk-text-center uk-text-bold uk-vertical-center">Total de la lista nominal</th>
+                                <th class="uk-text-center uk-text-bold uk-vertical-center">Total de votos</th>
+                                <th class="uk-text-center uk-text-bold uk-vertical-center">Lista nominal de actas contabilizadas</th>
+                                <th class="uk-text-center uk-text-bold uk-vertical-center">Participación ciudadana</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="md-bg-grey-200 uk-text-truncate uk-text-bold">Total</td>
+                                <td class="md-bg-pink-50 uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{id_ubicacion: municipios_cmb})[0].esperadas  | number}}</td>
+                                <td class="md-bg-pink-50 uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{id_ubicacion: municipios_cmb})[0].capturadas  | number}}</td>
+                                <td class="md-bg-pink-50 uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{id_ubicacion: municipios_cmb})[0].contabilizadas  | number}}</td>
+                                <td class="md-bg-pink-50 uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{id_ubicacion: municipios_cmb})[0].no_contabilizadas  | number}}</td>
+                                <td class="md-bg-pink-50 uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{id_ubicacion: municipios_cmb})[0].con_inconsistencia  | number}}</td>
+                                <th class="md-delete-border"></th>
+                                <td class="md-bg-pink-50 uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{id_ubicacion: municipios_cmb})[0].total_lista_nominal  | number}}</td>
+                                <td class="md-bg-pink-50 uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{id_ubicacion: municipios_cmb})[0].votos_scs  | number}}</td>
+                                <td class="md-bg-pink-50 uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{id_ubicacion: municipios_cmb})[0].lncontabilizada  | number}}</td>
+                                <td class="md-bg-pink-50 uk-text-center">{{ (entidad.detalle_votos_distritos | filter:{id_ubicacion: municipios_cmb})[0].participacion_ppci}}%</td>
+                            </tr>
+                            <tr>
+                                <td class="md-bg-grey-200 uk-text-truncate uk-text-bold uk-vertical-center">Porcentaje</td>
+                                <td class="md-bg-pink-50 uk-text-center uk-vertical-center">{{ (entidad.detalle_votos_distritos | filter:{id_ubicacion: municipios_cmb})[0].esperadas_porcentaje}}%</td>
+                                <td class="md-bg-pink-50 uk-text-center uk-vertical-center">{{ (entidad.detalle_votos_distritos | filter:{id_ubicacion: municipios_cmb})[0].capturadas_porcentaje}}%</td>
+                                <td class="md-bg-pink-50 uk-text-center uk-vertical-center">{{ (entidad.detalle_votos_distritos | filter:{id_ubicacion: municipios_cmb})[0].contabilizadas_porcentaje}}%</td>
+                                <td class="md-bg-pink-50 uk-text-center uk-vertical-center">{{ (entidad.detalle_votos_distritos | filter:{id_ubicacion: municipios_cmb})[0].no_contabilizadas_porcentaje}}%</td>
+                                <td class="md-bg-pink-50 uk-text-center uk-vertical-center">{{ (entidad.detalle_votos_distritos | filter:{id_ubicacion: municipios_cmb})[0].con_inconsistencia_porcentaje}}%</td>
+                                <th class="md-delete-border"></th>
+                                <td class="md-bg-pink-50 md-color-pink-500"></td>
+                                <td class="md-bg-pink-50 md-color-pink-500 uk-text-center" colspan="3">Total de votos/lista nominal de actas contabilizadas = %Participación</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

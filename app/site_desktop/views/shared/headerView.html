@@ -1,0 +1,24 @@
+    <!-- main header -->
+    <header id="header_main" ng-controller="main_headerCtrl" >
+        <div class="header_main_content">
+            <nav class="uk-navbar">
+                <div class="main_logo_top uk-width-medium-1-6" ng-if="topMenuActive || fullHeaderActive">
+                    <a href="https://ieeg.mx/"><img ng-src="assets/img/logoColor.png" alt="" add-image-prop/></a>
+                </div>
+                <div class="text-center uk-width-medium-4-6 encabezado_header" ng-if="topMenuActive || fullHeaderActive">
+                    <h2 class="uk-margin-bottom-remove">Elecciones Estatales Guanajuato</h2>
+                    <h4 class="heading_a">Programa de Resultados Electorales Preliminares</h4>
+                </div>
+                <div class="uk-navbar-flip uk-width-medium-1-6">
+                    <ul class="uk-navbar-nav user_actions imagenPrep2018">
+                        <li>
+                            <div class="main_logo_top" ng-if="topMenuActive || fullHeaderActive">
+                                <a href="#" ><img ng-src="assets/img/logoPREP.png" alt="" add-image-prop/></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- main header end -->

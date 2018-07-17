@@ -1,0 +1,381 @@
+#header_main {
+  padding: 0 10px;
+}
+
+.m-header_main_content {
+  height: 50px;
+  text-align: center;
+}
+
+#mo-header_main {
+  background: #fff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  height: 70px;
+  padding: 10px 0;
+  box-sizing: border-box;
+  border-bottom: 3px solid #711455;
+}
+
+.mo-header-container-img {
+  width: 35%;
+  text-align: center;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.mo-header-container-texto {
+  width: 64%;
+  display: inline-block;
+}
+
+.mo-header-buttom {
+  width: 100%;
+  height: 100px;
+  box-sizing: border-box;
+  /* padding: 10px 0; */
+  text-align: center;
+}
+
+.mo-header-container-w-50 {
+  width: 49%;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.mo-header-container-w-40 > p {
+  font-size: 10px;
+  text-align: left;
+}
+
+.m-color-white {
+  background-color: #fff;
+}
+
+.m-button-size-50 {
+  width: 49.4%;
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 3;
+  height: 50px;
+  background-color: #b5007a;
+  margin: 10px 0;
+  color: #fff;
+  font-family: "Arial", sans-serif;
+  line-height: initial;
+}
+
+.m-button-active {
+  background-color: #711455;
+  color: #fff;
+}
+
+.m-header {
+  background-color: #711455 !important;
+}
+
+.m-font-color-white {
+  color: #fff;
+  text-shadow: none;
+}
+
+.m-header-img {
+  width: 55px;
+  background-color: white;
+  margin-top: 10px;
+  margin-right: 4px;
+  padding: 2px;
+  box-sizing: border-box;
+  border-radius: 2px;
+}
+
+.m-header-texto-encabezado {
+  margin-top: 18px;
+  color: #fff;
+  font-size: 11px;
+}
+
+.m-gobernador {
+  margin: 10px;
+}
+
+.m-gobernador:hover .uk-progress-bar {
+  background-color: pink;
+}
+
+.m-gobernador > div {
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.m-gobernador > div > img {
+  width: 90%;
+  border-radius: 50%;
+}
+
+.m-progress-bar-gobernador > div {
+  background-color: #b5007a;
+}
+
+.m-quita-margin {
+  margin: 0 !important;
+}
+
+.m-background-purple {
+  background-color: #711455;
+  margin: 5px 0px;
+  display: inline-block;
+  color: #fff;
+  text-shadow: none;
+  border: 1px solid #711455;
+  box-sizing: border-box;
+  border-radius: 0px;
+}
+
+.m-background-purple:hover,
+.m-background-purple-active {
+  background-color: #fff;
+  color: #711455;
+}
+
+.m-background-purple:hover > i {
+  color: #711455;
+}
+
+.m-button-firts {
+  padding-top: 10px;
+}
+
+.m-margin-15 {
+  margin: 15px;
+}
+
+.m-progress-height-15 {
+  height: 15px !important;
+}
+
+.m-margin-15-0-0 {
+  margin: 15px 0 0;
+}
+
+.m-padding-top-35 {
+  padding-top: 35px;
+}
+
+.m-font-size-10 {
+  font-size: 10px !important;
+}
+
+.m-font-size-12 {
+  font-size: 12px !important;
+}
+
+.m-color-morado-rgb-a-50 {
+  background-color: #ffedfa;
+}
+
+.m-encabezado-total-votos {
+  margin-top: 5px !important;
+  border-right: 1px solid #711455;
+  height: 80%;
+  vertical-align: middle;
+  box-sizing: border-box;
+  padding: 9px 0px 0;
+}
+
+.m-encabezdo-texto-otros-votos {
+  line-height: normal;
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+.m-background-purple-combobox {
+  background-color: #711455;
+  color: #fff;
+  height: 90px;
+}
+
+.m-menu-bottom-fixed {
+  position: fixed;
+  bottom: 0;
+  z-index: 1;
+  width: 100%;
+}
+
+.m-flechas {
+  display: block !important;
+  top: 28px !important;
+  color: #fff;
+  width: auto;
+}
+
+.m-encabezado-table-seccion-casilla,
+.m-encabezado-table-seccion-casilla > td > h4,
+.m-encabezado-table-seccion-casilla > td > h3 {
+  background-color: #711455;
+  color: #fff !important;
+  transition: 1s;
+}
+
+.m-flechas:hover {
+  color: #ccc !important;
+}
+
+.m-encabezado-extrajenro {
+  height: 47px;
+  padding-top: 14px;
+  box-sizing: border-box;
+}
+
+.m-hipervinculo-acta-origen-n {
+  margin: 0px !important;
+  padding: 5px 10px;
+  border: 1px solid #711455;
+  border-radius: 5px;
+  color: #711455;
+  display: inline-block;
+}
+
+.m-hipervinculo-acta-origen-s {
+  margin: 0px !important;
+  padding: 5px 10px;
+  border: 1px solid #ab47bc;
+  border-radius: 5px;
+  color: #ab47bc;
+  display: inline-block;
+}
+
+.m-hipervinculo-acta-origen-s > a {
+  color: #ab47bc;
+}
+
+.m-height-100 {
+  height: 100% !important;
+}
+
+.m-height-100 > img {
+  width: 70% !important;
+}
+
+.m-background-purple-900 {
+  background-color: #711455 !important;
+}
+
+.m-color-white-text {
+  color: #fff !important;
+}
+
+.m-nav-menu-header {
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+}
+
+.m-table-mayor {
+  -webkit-box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.7);
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.7);
+  color: #ff0087;
+  font-weight: bold;
+}
+
+.m-table-mayor > td > .m-progress-bar-gobernador > div{
+  background-color: #ff0087 !important;
+}
+
+.m-table-result-total{
+  background-color: #ffd7f3 !important;
+  border-bottom: 2px solid #711455 !important;
+}
+
+.m-table-result-total td:first-child, .m-table-result-total > .m-border-total{
+  border-right: 2px solid #711455 !important;
+  color: #711455 !important;
+}
+
+.m-table-border-right{
+  border-right: 1px solid #ccc !important;
+}
+
+.mo-text-size-10{
+  font-size: 10px;
+}
+
+.mo-div-border-right{
+  border-right: 1px solid;
+padding-left: 5px;
+}
+
+.mo-border-total{
+  border-bottom: 1px solid #711455 !important;
+  color: #000 !important;
+}
+
+.mo-border-total .m-border-total{
+  border-left: 1px solid #711455 !important;
+  color: #711455 !important;
+}
+
+.mo-border-right{
+  border-right: 1px solid #711455 !important;
+  color: #711455 !important;
+  padding-right: 10px;
+}
+
+.mo-color-purple{
+  color: #711455 !important;
+}
+
+.highcharts-yaxis-grid .highcharts-grid-line {
+  display: none !important;
+}
+.box-win {
+  box-shadow: 0 0.2rem 1.2rem 0.2rem #888;
+}
+.cursor-pinter-box {
+  cursor: pointer;
+}
+.text-head-border-purple {
+  border-bottom: 3px solid #7b0055 !important;
+}
+.text-head-border-pink {
+  border-bottom: 3px solid #ff0087 !important;
+}
+.box-disable,
+.box-disable div,
+.box-disable h3,
+.box-disable h2 {
+  border-bottom: none !important;
+  color: #a9a9a9 !important;
+  border-bottom: 3px solid transparent !important;
+}
+
+.mo-style-movil {
+  background-image: none;
+}
+
+#login_form {
+  height: 400px;
+  position: relative;
+}
+
+.mo-button-index{
+    position: absolute;
+    bottom: 0
+}
+
+.md-counter-time{
+  position: absolute;
+  bottom: 100px;
+  width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+  .mo-style-movil {
+    background-image: url('../img/fondo_movil.png');
+  }
+
+  #login_form {
+    height: 550px;
+  }
+}

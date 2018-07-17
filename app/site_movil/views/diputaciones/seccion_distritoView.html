@@ -1,0 +1,176 @@
+<div class="uk-grid-small uk-margin-remove">
+    <div ng-include src="'app/site_movil/views/shared/avanceView.html'"></div>
+</div>
+
+<div class="uk-grid uk-margin-remove">
+    <div class="uk-width-1-1 uk-padding-add uk-text-right uk-margin-remove">
+        <a ng-click="reload()" class="uk-button uk-margin-remove uk-button-small m-background-purple m-font-color-white">
+            <i class="material-icons m-font-color-white">refresher</i> Actualizar
+        </a>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small-1-1 uk-flex uk-flex-center uk-margin-remove" id="page_content">
+    <div class="uk-width-1-1 uk-margin-left">
+        <h3 class="md-color-pink uk-margin-remove">Diputaciones
+            <span class="md-color-purple">- Secciones por Distrito</span>
+        </h3>
+        <label class="m-font-size-12">{{(cmb_distritos_data | filter:{valor : distritos_cmb})[0].nombre }}</label>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small-1-1 uk-flex uk-flex-center">
+    <div class="md-card">
+        <div class="uk-grid m-background-purple-combobox">
+            <div class="uk-width-1-5"></div>
+            <div class="uk-width-3-5">
+                <p class="uk-text-center m-encabezdo-texto-otros-votos">Consulta otro Distrito:</p>
+                <input type="text" config="cmb_distritos_config" options="cmb_distritos_data" ng-model="distritos_cmb" name="distritos_cmb"
+                    selectize class="uk-form-width-meddim uk-text-center" />
+            </div>
+            <div class="uk-width-1-5"></div>
+        </div>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small-1-1 uk-flex uk-flex-center">
+    <div class="md-card">
+        <div class="uk-grid m-background-purple-combobox">
+            <div class="uk-width-1-5"></div>
+            <div class="uk-width-3-5">
+                <p class="uk-text-center m-encabezdo-texto-otros-votos">Sección:</p>
+                <input type="text" class="uk-text-center" config="cmb_secciones_config" options="(cmb_secciones_data | filter:{IDUBICACION : distritos_cmb})[0].Secciones"
+                    ng-model="seccion_cmb" name="seccion_cmb" selectize class="uk-form-width-large" />
+            </div>
+            <div class="uk-width-1-5"></div>
+        </div>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small uk-flex uk-flex-center">
+    <div class="md-card uk-grid uk-grid-small uk-margin-remove">
+        <div class="uk-width-1-1 uk-padding-remove">
+            <table class="uk-table uk-table-small uk-table-responsive uk-text-center uk-table-striped">
+                <thead>
+                    <tr class="m-table-result-total uk-text-center">
+                        <th class="uk-width-1-1 uk-text-middle mo-border-total" colspan="2">
+                            <div class="uk-grid">
+                                <div class="uk-width-1-2 uk-text-right mo-border-right">
+                                    <p class="uk-text-small uk-padding-add uk-text-bold">Total de votos</p>
+                                </div>
+                                <div class="uk-width-1-2 uk-text-left">
+                                    <p class="uk-text-small uk-padding-add uk-text-bold">{{ ((entidad.seccion_distrito | filter:{ id_ubicacion : distritos_cmb})[0].detalle |
+                                        filter: { id_seccion : seccion_cmb })[0].info[ ((cmb_secciones_data | filter:{ IDUBICACION
+                                        : valorMunicipio })[0].Partidos | filter : query).length + 2 ] }}</p>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in (cmb_secciones_data | filter:{IDUBICACION : distritos_cmb})[0].Partidos">
+                        <td class="uk-width-1-2 uk-text-middle">
+                            <img class="logo-tabla" ng-if="(item == 'CAND_IND_1')" ng-src="assets/img/logos_partidos/independientes/{{item}}_{{distritos_cmb}}.png">
+                            <img class="logo-tabla" ng-if="(item != 'CAND_IND_1')" ng-src="assets/img/logos_partidos/{{item}}.png">
+                            <p class="uk-margin-bottom-remove uk-margin-top-remove uk-text-bold" ng-if="item != '' ">{{item.title}}</p>
+                        </td>
+                        <td class="uk-width-1-2 uk-text-middle uk-text-center">
+                            <p class="uk-text-center uk-text-bold uk-text-small uk-text-left m-quita-margin m-font-size-10">{{ ( (entidad.seccion_distrito | filter:{ id_ubicacion : distritos_cmb})[0].detalle | filter:
+                                {id_seccion : seccion_cmb})[0].info[$index] | number }}</p>
+                            <p class="uk-text-center uk-text-bold uk-text-small uk-text-left uk-text-comment m-font-size-10 m-quita-margin">Total de votos</p>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td colspan="2" class="uk-width-1-1 md-color-purple-900 uk-text-left uk-text-bold uk-text-center">Estadística de secciones por Distrito</td>
+                    </tr>
+                    <tr>
+                        <td class="uk-width-1-2 uk-text-small uk-text-center" colspan="2">
+                            <div class="uk-grid uk-text-bold">
+                                <div class="uk-width-2-3 mo-color-purple mo-border-right">Actas por Sección</div>
+                                <div class="uk-width-1-3 mo-color-purple">Total</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uk-width-1-2 uk-text-middle uk-text-center" colspan="2">
+                            <div class="uk-grid">
+                                <div class="uk-width-2-3">Esperadas</div>
+                                <div class="uk-width-1-3">{{ ((entidad.seccion_distrito | filter:{ id_ubicacion : distritos_cmb})[0].actas_detalle
+                                    | filter : { id_seccion : seccion_cmb })[0].esperadas | number }}</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uk-width-1-2 uk-text-middle uk-text-center" colspan="2">
+                            <div class="uk-grid">
+                                <div class="uk-width-2-3">Capturadas</div>
+                                <div class="uk-width-1-3">{{ ((entidad.seccion_distrito | filter:{ id_ubicacion : distritos_cmb})[0].actas_detalle
+                                    | filter : { id_seccion : seccion_cmb })[0].capturadas | number }}</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uk-width-1-2 uk-text-middle uk-text-center" colspan="2">
+                            <div class="uk-grid">
+                                <div class="uk-width-2-3">Contabilizadas</div>
+                                <div class="uk-width-1-3">{{ ((entidad.seccion_distrito | filter:{ id_ubicacion : distritos_cmb})[0].actas_detalle
+                                    | filter : { id_seccion : seccion_cmb })[0].contabilizadas | number }}</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uk-width-1-2 uk-text-middle uk-text-center" colspan="2">
+                            <div class="uk-grid">
+                                <div class="uk-width-2-3">No Contabilizadas</div>
+                                <div class="uk-width-1-3">{{ ((entidad.seccion_distrito | filter:{ id_ubicacion : distritos_cmb})[0].actas_detalle
+                                    | filter : { id_seccion : seccion_cmb })[0].no_contabilizadas | number }}</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uk-width-1-2 uk-text-middle uk-text-center" colspan="2">
+                            <div class="uk-grid">
+                                <div class="uk-width-2-3">Con Inconsistencia</div>
+                                <div class="uk-width-1-3">{{ ((entidad.seccion_distrito | filter:{ id_ubicacion : distritos_cmb})[0].actas_detalle
+                                    | filter : { id_seccion : seccion_cmb })[0].con_inconsistencias | number }}</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2" style="border-bottom: 0px !important;">
+                            <h4 class="uk-margin-remove md-color-pink"> Participación ciudadana respecto a las Actas Contabilizadas</h4>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>Total de la lista nominal</td>
+                        <td class="uk-text-center">{{  ((entidad.seccion_distrito | filter:{ id_ubicacion : distritos_cmb})[0].actas_detalle
+                                | filter : { id_seccion : seccion_cmb })[0].ln | number  }}</td>
+                    </tr>
+                    <tr>
+                        <td>Total de votos</td>
+                        <td class="uk-text-center">{{  ((entidad.seccion_distrito | filter:{ id_ubicacion : distritos_cmb})[0].actas_detalle
+                                | filter : { id_seccion : seccion_cmb })[0].votos_scs | number
+                            }} </td>
+                    </tr>
+                    <tr>
+                        <td>Lista nominal de actas contabilizadas</td>
+                        <td class="uk-text-center">{{  ((entidad.seccion_distrito | filter:{ id_ubicacion : distritos_cmb})[0].actas_detalle
+                                | filter : { id_seccion : seccion_cmb })[0].total_lista_nominal | number }}</td>
+                    </tr>
+                    <tr>
+                        <td>Participación ciudadana respecto a las Actas Contabilizadas</td>
+                        <td class="uk-text-center">{{ ((entidad.seccion_distrito | filter:{ id_ubicacion : distritos_cmb})[0].actas_detalle
+                                | filter : { id_seccion : seccion_cmb })[0].participacion_ppci }}% </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="uk-grid uk-grid-small uk-grid-width-small-1-1 uk-flex uk-flex-center">
+    <div class="uk-width-1-4"></div>
+    <div class="uk-width-3-4 uk-grid-small uk-text-right">
+        <button ui-sref="movil.diputaciones_seccion_casilla({id_ubicacion : distritos_cmb, id_seccion : seccion_cmb})" class="uk-button uk-text-small m-background-purple">Ver Casillas</button>
+    </div>
+</div>
+<br>

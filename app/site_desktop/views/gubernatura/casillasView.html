@@ -1,0 +1,52 @@
+<div id="page_content">
+    <div id="top_bar">
+        <div ncy-breadcrumb></div>
+    </div>
+    <div id="page_content_inner">
+
+        <div class="uk-grid uk-grid-medium">
+            <div class="uk-width-large-1-1 uk-width-small-1-1 uk-text-right">
+                <a ng-click="reload()" class="md-btn md-btn-small md-bg-purple md-color-white md-btn-wave-light md-btn-icon">
+                    <i class="material-icons md-color-white uk-margin-right">loop</i>Actualizar
+                </a>
+            </div>
+        </div>
+
+        <div ng-include src="'app/site_desktop/views/shared/avanceView.html'"></div>
+        
+        <div class="uk-grid uk-grid-medium">
+            <div class="uk-width-large-4-5 uk-width-medium-1-2 uk-width-small-1-1">
+                <h2 class="uk-margin-bottom uk-margin-top md-color-pink-500">Gubernatura
+                    <span class="md-color-purple">- Sección - Casilla</span>
+                </h2>
+                <p class="uk-text-bold">Selecciona el nombre del Distrito y posteriormente el nombre de la Sección a consultar:</p>
+            </div>
+            <div class="uk-width-large-1-5 uk-width-medium-1-2 uk-width-small-1-1 uk-text-right">
+                <br/>
+                <a ui-sref="desktop.basedatos" class="md-btn md-btn-small md-bg-grey-800 md-color-white md-btn-wave-light md-btn-icon btn-descargar">
+                    <i class="uk-icon-download md-color-white"></i>
+                    Base de datos
+                </a>
+            </div>
+        </div>
+
+        <div class="uk-grid uk-grid-medium">
+            <div class="uk-width-large-2-10" ></div>
+            <div class="uk-width-large-3-10" >
+                <h4>Distrito</h4>
+                <input type="text" config="cmb_distritos_config" options="cmb_distritos_data" ng-model="distritos_cmb" name="distritos_cmb"  selectize class="uk-form-width-large"/>
+            </div>
+            <div class="uk-width-large-2-10">
+                <h4>Sección</h4>
+                <input type="text" config="cmb_secciones_config" options="(cmb_secciones_data | filter:{IDUBICACION : distritos_cmb})[0].Secciones" ng-model="secciones_cmb" name="secciones_cmb"  id="secciones_cmb" selectize class="uk-form-width-large"/>
+            </div>
+            <div class="uk-width-large-1-10">
+                <br/><br/>
+                <a ui-sref="desktop.gubernatura_seccion_casilla({id_ubicacion: distritos_cmb, id_seccion: secciones_cmb })" class="md-btn md-btn-wave waves-effect waves-button md-color-white md-bg-pink">
+                    Consultar
+                </a>
+            </div>
+            <div class="uk-width-large-2-10" ></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<!-- header -->
+<div oc-lazy-load="['app/site_movil/controllers/shared/headerController.js']" class="m-nav-menu-header">
+    <div ng-include="'app/site_movil/views/shared/headerView.html'" ng-controller="main_headerCtrl"></div>
+</div>
+
+<!-- <div oc-lazy-load="['app/site_movil/controllers/shared/menuController.js']" class="m-menu-bottom-fixed">
+    <div ng-include="'app/site_movil/views/shared/menu_topView.html'" ng-controller="main_headerCtrl"></div>
+</div> -->
+
+<div ui-view ng-class="{ 'uk-height-1-1': page_full_height }" style="padding-top: 40px;"></div>
+<!-- main sidebar -->
+<div oc-lazy-load="['app/site_movil/controllers/main_sidebar/main_sidebarController.js']">
+    <div ng-include="'app/site_movil/views/main_sidebar/main_sidebarView.html'" ng-controller="main_sidebarCtrl"></div>
+</div>
+
+<!-- <header id="mo-header_main">
+    <div class="mo-header_main_content">
+        <div class="mo-header-container-img">
+            <img ng-src="assets/img/logoPREP.png" alt="" style="width: 100px" />
+        </div>
+        <div class="mo-header-container-texto">
+            <h4 class="uk-margin-bottom-remove">Elecciones Estatales Guanajuato</h4>
+        </div>
+    </div>
+</header> -->
+
+<!-- <div ng-include src="'app/site_mobil/views/shared/menu_topView.html'"></div> -->
+
+<!-- restricted main content -->
+<div ng-include src="'app/site_movil/views/shared/footerView.html'"></div>
+
+<!-- style switcher -->
+<!-- <div oc-lazy-load="['assets/css/style_switcher.min.css','app/site_movil/views/shared/style_switcher/style_switcher.js']">
+    <style-switcher></style-switcher>
+</div> -->

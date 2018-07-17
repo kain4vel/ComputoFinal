@@ -1,0 +1,118 @@
+<div class="uk-grid-small uk-margin-remove">
+    <div ng-include src="'app/site_movil/views/shared/avanceView.html'"></div>
+</div>
+
+<div class="uk-grid uk-margin-remove">
+    <div class="uk-width-1-1 uk-padding-add uk-text-right uk-margin-remove">
+        <a ng-click="reload()" class="uk-button uk-margin-remove uk-button-small m-background-purple m-font-color-white">
+            <i class="material-icons m-font-color-white">refresher</i> Actualizar
+        </a>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small-1-1 uk-flex uk-flex-center" id="page_content">
+    <div class="uk-width-1-1 uk-margin-left">
+        <h3 class="md-color-pink uk-margin-remove">Gubernatura
+            <span class="md-color-purple">> Secciones - Casilla</span>
+        </h3>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small-1-1 uk-flex uk-flex-center">
+    <div class="md-card">
+        <div class="uk-grid m-background-purple-combobox">
+            <div class="uk-width-1-5"></div>
+            <div class="uk-width-3-5">
+                <p class="uk-text-center m-encabezdo-texto-otros-votos">Consulta otra Sección:</p>
+                <input type="text" class="uk-form-width-large uk-text-center" config="cmb_secciones_config" options="cmb_secciones_data"
+                    ng-model="seccion_cmb" name="seccion_cmb" selectize />
+            </div>
+            <div class="uk-width-1-5"></div>
+        </div>
+    </div>
+</div>
+
+<div class="uk-grid uk-grid-small uk-grid-width-small-1-1 uk-flex uk-flex-center">
+    <div class="md-card uk-grid uk-grid-small uk-padding-add">
+        <div class="uk-width-1-1">
+            <div class="uk-slidenav-position" data-uk-slideshow="{animation:'scroll'}">
+                <ul class="uk-slideshow">
+                    <li ng-repeat="item in (entidad.casillas | filter : { IDSECCION : seccion_cmb })[0].DATA">
+                        <!-- <table class="uk-table uk-table-small uk-table-responsive uk-text-center uk-table-striped uk-text-small"> -->
+                        <table class="uk-table uk-table-small uk-table-responsive uk-text-center">
+                            <thead>
+                                <tr class="m-encabezado-table-seccion-casilla">
+                                    <td class="uk-width-3-5 uk-text-center" colspan="2">
+                                        <h4 class="uk-text-center uk-text-bold uk-margin-none m-quita-margin">Casilla:</h4>
+                                        <h3 class="uk-text-center uk-text-bold uk-margin-none m-quita-margin">{{ seccion_cmb | fill4numbers }} {{item.TITULO}}</h3>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="uk-width-1-1 uk-text-center" colspan="2">
+                                        <p class="uk-width-1-2 m-hipervinculo-acta-origen-n" ng-if="item.ORIGEN == '' ">
+                                            <i class="material-icons">insert_drive_file</i>
+                                            Acta en proceso
+                                        </p>
+                                        <p class="uk-width-1-2 m-hipervinculo-acta-origen-s" ng-if="item.ORIGEN == 'CATD'">
+                                            <a href="https://s3.amazonaws.com/imagenes-ieeg01/{{item.URL}}" target="_blank">
+                                                <i class="material-icons md-color-purple-400">insert_drive_file</i>
+                                                <i class="material-icons md-color-purple-400">print</i>
+                                                Ver acta
+                                            </a>
+                                            Acta digitalizada con scanner
+                                        </p>
+                                        <p class="uk-width-1-2 m-hipervinculo-acta-origen-s" ng-if="item.ORIGEN == 'CASILLA'">
+                                            <a href="https://s3.amazonaws.com/imagenes-ieeg01/{{item.URL}}" target="_blank">
+                                                <i class="material-icons md-color-purple-400">insert_drive_file</i>
+                                                <i class="material-icons md-color-purple-400">smartphone</i>
+                                                Ver acta
+                                            </a>
+                                            Acta digitalizada con dispositivo móvil
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="par in encabezados">
+                                    <td class="uk-width-3-5">
+                                        <img class="logo-tabla" ng-if="par.nombrecorto != '' " ng-src="assets/img/logos_partidos/{{par.nombrecorto}}.png">
+                                        <p class="uk-text-small m-quita-margin uk-text-bold">{{par.nombre}}</p>
+                                    </td>
+                                    <td class="uk-width-1-5 uk-text-bold" ng-if="$index == (( encabezados | filter:query).length - 1)">
+                                        {{ item.TOTALCALCULADO | number : 0 }}
+                                        <br> Votos
+                                    </td>
+                                    <td class="uk-width-1-5 uk-text-bold" ng-if="$index != (( encabezados | filter:query).length - 1)">
+                                        {{ item.RESULTADOS[$index] | number: 0 }}
+                                        <br> Votos
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="uk-width-3-5 uk-text-bold">Observaciones</td>
+                                    <td class="uk-width-1-5 uk-text-bold" style="color:#2659a5">{{ item.OBSERVACION }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="uk-width-1-1 uk-text-center uk-text-bold md-color-purple-900">
+                                        Estadística de casilla {{ seccion_cmb | fill4numbers }} Extraordinaria {{item.TITULO}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="uk-text-bold uk-text-center uk-width-1-2">Participacion ciudadana</td>
+                                    <td class="uk-text-bold uk-text-center uk-width-1-2">Lista nominal</td>
+                                </tr>
+                                <tr>
+                                    <td class="uk-text-center">{{ item.PARTICIPACION }}%</td>
+                                    <td class="uk-text-center">{{ item.LN | number }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </li>
+                </ul>
+                <a href="" class="uk-slidenav uk-slidenav-previous m-flechas" data-uk-slideshow-item="previous"></a>
+                <a href="" class="uk-slidenav uk-slidenav-next m-flechas" data-uk-slideshow-item="next"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>

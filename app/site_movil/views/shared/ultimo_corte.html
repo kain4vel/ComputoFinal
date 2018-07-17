@@ -1,0 +1,139 @@
+<div class="uk-width-small-1-1">
+    <h2 class="md-color-purple uk-text-small uk-padding-add">
+        Último corte:
+        <b>{{entidad.resumen.fecha_hora}} horas</b>
+        <a href="http://www.cenam.mx/hora_oficial/" target="_blank">(UTC-5)</a>Hora local,
+        <b>{{entidad.resumen.fecha_corte}}.</b>
+    </h2>
+</div>
+
+<div class="uk-grid uk-grid-small" data-uk-grid-margin data-uk-grid-match="{target:'.md-card'}">
+    <div class="uk-width-small-1-1">
+        <div class="md-card">
+            <div class="md-card-content uk-padding-add">
+                <div class="uk-width-1-1">
+                    <h2 class="m-quitar-margin md-color-pink">Estadística Estatal</h2>
+                    <h3 class="uk-margin-bottom md-color-purple heading_b">Actas
+                        <a href="https://prepgto2018.ieeg.mx/ayuda/pages/actas/actas.html" target="_blank">
+                            <i class="material-icons md-color-purple-900 uk-margin-left md-24">help</i>
+                        </a>
+                    </h3>
+                    <div style="width: 100%; height: 250px; margin: 0 auto">
+                        <div id="container" style="width: 100%;  height: 250px;"></div>
+                    </div>
+                    <div class="uk-grid uk-grid-small uk-margin-left uk-margin-right">
+                        <div class="uk-width-1-3 uk-text-center cursor-pinter-box uk-padding-left-remove" ng-mouseover="overCapturadas()" ng-class="{'box-disable': !capturadas, 'box-win': capturadas }">
+                            <div class="uk-margin-bottom text-head-border-pink">
+                                <h3 class="uk-margin-remove">Capturadas</h3>
+                            </div>
+                            <h2 class="md-color-pink uk-margin-remove uk-margin-bottom">{{entidad.resumen.actas_capturadas | number}}</h2>
+                        </div>
+                        <div class="uk-width-1-3 uk-text-center cursor-pinter-box uk-padding-left-remove" ng-mouseover="overContabilizadas()" ng-class="{'box-disable'
+                        : !contabilizadas, 'box-win': contabilizadas }">
+                            <div class="uk-margin-bottom text-head-border-purple">
+                                <h3 class="uk-margin-remove">Contabilizadas</h3>
+                            </div>
+                            <h2 class="md-color-purple uk-margin-remove uk-margin-bottom">{{entidad.resumen.actas_contabilizadas | number}}</h2>
+                        </div>
+                        <div class="uk-width-1-3 uk-text-center md-border-left-grey ">
+                            <div class="uk-margin-bottom">
+                                <h3 class="uk-margin-remove md-color-black">Esperadas</h3>
+                            </div>
+                            <h2 class="md-color-black uk-margin-remove uk-margin-bottom">{{entidad.resumen.actas_esperadas | number}}</h2>
+                        </div>
+                    </div>
+
+                    <h4>Actas contabilizadas de casillas:</h4>
+                    <table class="uk-table">
+                        <tbody>
+                            <tr class="md-delete-bottom md-bg-grey-200">
+                                <td class="md-border-right-grey uk-text-center uk-width-1-2">
+                                    <h3 class="uk-margin-bottom-remove">Urbanas</h3>
+                                    <h2 class="uk-margin-top-remove uk-margin-bottom-remove">
+                                        <i class="material-icons md-24 ">insert_drive_file</i> {{entidad.resumen.urbanas | number}}</h2>
+                                </td>
+                                <td class="uk-text-center uk-width-1-2">
+                                    <h3 class="uk-margin-bottom-remove">No Urbanas</h3>
+                                    <h2 class="uk-margin-top-remove uk-margin-bottom-remove">
+                                        <i class="material-icons md-24">insert_drive_file</i> {{entidad.resumen.no_urbanas | number}}</h2>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="uk-width-small-1-1">
+        <div class="md-card">
+            <div class="md-card-content">
+                <h3 class="uk-margin-bottom md-color-purple heading_b">Participación ciudadana respecto a las Actas Contabilizadas
+                    <a href="https://prepgto2018.ieeg.mx/ayuda/pages/acerca_voto/acerca_voto.html" target="_blank">
+                        <i class="material-icons md-color-purple-900 uk-margin-left md-24">help</i>
+                    </a>
+                </h3>
+                <p class="uk-text-justify">El porcentaje de participación ciudadana se obtiene al multiplicar los Votos por 100 y dividir el resultado
+                    de esta operación entre el número de personas registrado en la Lista Nominal de Actas Contabilizadas.</p>
+                <div class="uk-display-inline-block uk-text-center">
+                    <h1 class="uk-margin-bottom-remove">
+                        <span class="md-color-pink">{{entidad.resumen.participacion_ciudadana }}%</span>
+                    </h1>
+                    <p class="uk-text-small uk-text-left">
+                        Porcentaje calculado
+                        <span class="md-color-pink">sin considerar</span> la votación en
+                        <span class="md-color-pink">casillas especiales.</span>
+                    <pl>
+                </div>
+                <h3>Votos en</h3>
+                <table class="uk-table uk-table-middle">
+                    <tbody>
+                        <tr class="md-border-bottom-small">
+                            <td class="md-border-right-grey logo-tabla uk-text-small">Votos en casillas básicas, contiguas y extraordinarias</td>
+                            <td class="uk-text-center">
+                                <h4 class="md-color-pink uk-margin-top-remove uk-margin-bottom-remove">{{entidad.resumen.total_votos |number}}</h4>
+                            </td>
+                        </tr>
+                        <tr class="md-bg-grey-200 md-border-bottom-small">
+                            <td class="md-border-right-grey uk-text-small">Votos en casillas especiales</td>
+                            <td class="uk-text-center">
+                                <h4 class="md-color-black uk-margin-top-remove uk-margin-bottom-remove">{{entidad.resumen.total_especiales |number}}</h4>
+                            </td>
+                        </tr>
+                        <tr class="md-delete-bottom">
+                            <td class="md-border-right-grey uk-text-bold uk-text-small">Total</td>
+                            <td class="uk-text-center">
+                                <h3 class="md-color-black uk-margin-top-remove uk-margin-bottom-remove">{{entidad.resumen.total_total |number}}</h3>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="heading_b uk-margin-bottom md-color-purple">Lista Nominal</h3>
+
+                <div class="uk-width-small-1-1">
+
+                    <h4 class="uk-margin-bottom">Actas contabilizadas:
+                        <br/>
+                        <span class="md-color-pink">{{entidad.resumen.ln_contabilizada |number}}</span>
+                    </h4>
+                    <div class="uk-progress uk-progress-large">
+                        <div class="uk-progress-bar md-bg-purple" ng-style="{ 'width': {{ entidad.resumen.porcentaje_ln }} + '%'}"></div>
+                    </div>
+                </div>
+                <div class="uk-width-1-1 uk-text-right">
+                    <h4 class="uk-margin-bottom ">
+                        Lista Nominal oficial:
+                        <br/>
+                        <span class="md-color-pink">{{entidad.resumen.lista_nominal |number}}</span>
+                    </h4>
+                </div>
+            </div>
+
+            <h4 class="md-bg-grey-200 uk-padding-add">
+                <a href="http://172.16.200.109/ayuda/pages/acerca_voto/acerca_voto.html" target="_blank">
+                    <i class="material-icons md-color-pink-500">&#xE88E;</i> Conoce qué es la lista nominal.</a>
+            </h4>
+        </div>
+    </div>
+</div>
